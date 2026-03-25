@@ -4,275 +4,524 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otaku 24/7</title>
-
     <style>
+        * { box-sizing:border-box; margin:0; padding:0; }
         body {
-            margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: #0a0a0f;
-            color: white;
-            transition: 0.3s;
+            background:#05050a;
+            color:#fff;
+            overflow-x:hidden;
         }
 
-        /* Modo claro */
-        body.light {
-            background: #f2f2f2;
-            color: #111;
-        }
+        a { color:inherit; text-decoration:none; }
 
+        /* LOGO + NAV */
         header {
-            background: linear-gradient(90deg, #ff00cc, #6600ff);
-            padding: 20px;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
+            position:sticky;
+            top:0;
+            z-index:50;
+            background:rgba(5,5,10,0.95);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid #222;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:10px 20px;
+        }
+        .logo {
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .logo-mark {
+            width:32px;
+            height:32px;
+            border-radius:10px;
+            border:2px solid #fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:0.8rem;
+        }
+        .logo-text {
+            font-weight:600;
+            letter-spacing:1px;
+        }
+        nav {
+            display:flex;
+            gap:15px;
+            font-size:0.9rem;
+        }
+        nav a {
+            padding:6px 10px;
+            border-radius:999px;
+            transition:0.2s;
+        }
+        nav a:hover {
+            background:#ff2fb233;
         }
 
-        /* Botón modo oscuro/claro */
-        #modo {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: #ff00cc;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+        /* INTRO PORTAL */
+        .intro-overlay {
+            position:fixed;
+            inset:0;
+            background:radial-gradient(circle at top, #6b4bff 0, #05050a 55%, #000 100%);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            z-index:100;
+        }
+        .intro-portal {
+            width:260px;
+            height:260px;
+            border-radius:50%;
+            border:3px solid #7d5bff;
+            box-shadow:0 0 30px #7d5bffaa;
+            position:relative;
+            margin-bottom:25px;
+            overflow:hidden;
+        }
+        .intro-ring {
+            position:absolute;
+            inset:10px;
+            border-radius:50%;
+            border:2px dashed #ff2fb2;
+            animation:spin 10s linear infinite;
+        }
+        .intro-chibi {
+            position:absolute;
+            inset:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:3rem;
+            animation:float 3s ease-in-out infinite;
+        }
+        .intro-title {
+            font-size:2rem;
+            font-weight:700;
+            margin-bottom:8px;
+        }
+        .intro-sub {
+            font-size:0.95rem;
+            opacity:0.85;
+            margin-bottom:20px;
+        }
+        .intro-btn {
+            padding:10px 26px;
+            border-radius:999px;
+            border:none;
+            background:#ff2fb2;
+            color:#fff;
+            font-weight:600;
+            cursor:pointer;
+            font-size:0.95rem;
+            box-shadow:0 0 15px #ff2fb288;
+            transition:0.2s;
+        }
+        .intro-btn:hover {
+            transform:translateY(-2px);
+            box-shadow:0 0 22px #ff2fb2aa;
         }
 
-        /* Portada */
-        .portada {
-            position: relative;
-            height: 380px;
-            background: url('https://i.imgur.com/8QfZQ7M.jpeg') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        @keyframes spin {
+            to { transform:rotate(360deg); }
+        }
+        @keyframes float {
+            0%,100% { transform:translateY(0); }
+            50% { transform:translateY(-10px); }
         }
 
-        .portada h1 {
-            background: rgba(0,0,0,0.6);
-            padding: 20px 40px;
-            border-radius: 10px;
-            font-size: 3.2rem;
-            animation: entrada 2s ease-out;
+        /* CHIBI FIJO */
+        .chibi-fixed {
+            position:fixed;
+            bottom:15px;
+            left:15px;
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            background:radial-gradient(circle at top, #ff2fb2, #6b4bff);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:2.2rem;
+            box-shadow:0 0 18px #6b4bffaa;
+            animation:float 3s ease-in-out infinite;
+            z-index:40;
         }
 
-        @keyframes entrada {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        main { padding:20px; max-width:1100px; margin:0 auto; }
 
-        /* Personaje anime animado */
-        .chibi {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            width: 120px;
-            animation: flotar 3s infinite ease-in-out;
-        }
-
-        @keyframes flotar {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-
-        section {
-            padding: 20px;
-        }
+        section { margin:30px 0; }
 
         h2 {
-            border-left: 5px solid #ff00cc;
-            padding-left: 10px;
-            margin-bottom: 10px;
+            font-size:1.4rem;
+            margin-bottom:12px;
+            border-left:4px solid #ff2fb2;
+            padding-left:8px;
+        }
+
+        .hero {
+            display:grid;
+            gap:20px;
+        }
+        @media(min-width:800px){
+            .hero { grid-template-columns:2fr 1.2fr; }
+        }
+        .hero-video {
+            background:#111;
+            border-radius:14px;
+            overflow:hidden;
+            box-shadow:0 0 18px #000;
+        }
+        .hero-video iframe {
+            width:100%;
+            height:260px;
+        }
+        .hero-info {
+            background:#111;
+            border-radius:14px;
+            padding:15px;
+        }
+        .hero-title {
+            font-size:1.2rem;
+            margin-bottom:8px;
+        }
+        .hero-buttons {
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin-top:12px;
+        }
+        .btn {
+            padding:8px 16px;
+            border-radius:999px;
+            background:#ff2fb2;
+            border:none;
+            color:#fff;
+            font-size:0.85rem;
+            font-weight:600;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+        }
+        .btn.secondary {
+            background:#222;
         }
 
         .grid {
-            display: grid;
-            gap: 15px;
+            display:grid;
+            gap:15px;
         }
-
-        .noticia-grande {
-            grid-template-columns: 1fr 1fr;
+        @media(min-width:800px){
+            .grid-3 { grid-template-columns:repeat(3,1fr); }
+            .grid-2 { grid-template-columns:repeat(2,1fr); }
         }
 
         .card {
-            background: #1a1a22;
-            padding: 15px;
-            border-radius: 10px;
-            transition: 0.3s;
+            background:#111;
+            border-radius:12px;
+            padding:12px;
+            box-shadow:0 0 12px #000;
+            transition:0.2s;
         }
-
         .card:hover {
-            transform: scale(1.03);
-            background: #262633;
+            transform:translateY(-3px);
+            box-shadow:0 0 18px #000;
+        }
+        .card img {
+            width:100%;
+            border-radius:10px;
+            margin-bottom:8px;
+        }
+        .tag {
+            display:inline-block;
+            font-size:0.7rem;
+            padding:2px 8px;
+            border-radius:999px;
+            background:#ff2fb233;
+            margin-bottom:4px;
+        }
+        .stars {
+            color:#ffdd55;
+            font-size:0.8rem;
+            margin-top:4px;
         }
 
-        .novias {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
+        /* ZONA RESTRINGIDA */
+        .crime-box {
+            background:#220000;
+            border:2px solid red;
+            border-radius:14px;
+            padding:25px;
+            text-align:center;
+            animation:glitch 1s infinite;
         }
-
-        .novia-card {
-            min-width: 180px;
-            background: #1a1a22;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
+        .crime-lock {
+            font-size:3rem;
+            margin-top:10px;
+            animation:lockwiggle 2s infinite;
         }
-
-        .btn {
-            background: #ff00cc;
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
+        @keyframes glitch {
+            0% { transform:skew(0deg); }
+            20% { transform:skew(1deg); }
+            40% { transform:skew(-1deg); }
+            60% { transform:skew(0.5deg); }
+            80% { transform:skew(-0.5deg); }
+            100% { transform:skew(0deg); }
         }
-
-        .btn:hover {
-            background: #ff33dd;
+        @keyframes lockwiggle {
+            0%,100% { transform:rotate(0deg); }
+            50% { transform:rotate(8deg); }
         }
 
         footer {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            background: #111;
+            margin-top:40px;
+            padding:20px;
+            text-align:center;
+            font-size:0.8rem;
+            color:#aaa;
+            border-top:1px solid #222;
         }
     </style>
 </head>
-
 <body>
 
-<header>OTAKU 24/7</header>
+<!-- MÚSICA INTRO (el usuario tendrá que aceptar reproducción en muchos navegadores) -->
+<audio id="intro-audio" src="https://suno.com/s/koGX21lYHZLnAWBH"></audio>
 
-<!-- Botón modo oscuro/claro -->
-<div id="modo">🌙</div>
-
-<!-- Música de fondo -->
-<audio autoplay loop>
-    <source src="https://files.catbox.moe/3n6y4p.mp3" type="audio/mp3">
-</audio>
-
-<!-- Personaje chibi animado -->
-<img class="chibi" src="https://i.imgur.com/9tZQF5G.png">
-
-<!-- Portada -->
-<div class="portada">
-    <h1>Bienvenido a Otaku 24/7</h1>
+<!-- PANTALLA DE ENTRADA ISEKAI -->
+<div class="intro-overlay" id="intro">
+    <div class="intro-portal">
+        <div class="intro-ring"></div>
+        <div class="intro-chibi">🧙‍♂️</div>
+    </div>
+    <div class="intro-title">Otaku 24/7</div>
+    <div class="intro-sub">
+        Has sido invocado a otro mundo.<br>
+        Cruza el portal y entra en el reino anime.
+    </div>
+    <button class="intro-btn" id="enter-btn">ENTRAR AL PORTAL</button>
 </div>
 
-<!-- Canal incrustado -->
-<section>
-    <h2>📺 Mi Canal en Vivo</h2>
-    <iframe width="100%" height="350" src="TU_LINK_AQUI" frameborder="0" allowfullscreen></iframe>
-</section>
+<!-- CHIBI FIJO -->
+<div class="chibi-fixed">🧙‍♂️</div>
 
-<!-- Noticias -->
-<section>
-    <h2>📰 Últimas Noticias</h2>
+<header>
+    <div class="logo">
+        <div class="logo-mark">O24</div>
+        <div class="logo-text">Otaku 24/7</div>
+    </div>
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#isekai">Anime Isekai</a>
+        <a href="#guias">Guías y Trucos</a>
+        <a href="#afiliaciones">Afiliaciones</a>
+        <a href="#zona-restringida">Zona Restringida</a>
+    </nav>
+</header>
 
-    <div class="grid noticia-grande">
+<main>
+
+    <!-- INICIO / CANAL -->
+    <section id="inicio">
+        <h2>📺 Canal principal – DarkMorgana23</h2>
+        <div class="hero">
+            <div class="hero-video">
+                <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=DarkMorgana23"
+                        title="DarkMorgana23"
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="hero-info">
+                <div class="hero-title">Bienvenido al mundo de DarkMorgana23</div>
+                <p style="font-size:0.9rem; opacity:0.9;">
+                    Directos, clips, noticias y locuras otaku 24/7.  
+                    Entra, mira, vota, comenta y viaja entre portales de anime y juegos.
+                </p>
+                <div class="hero-buttons">
+                    <a class="btn" href="https://www.youtube.com/@DarkMorgana23" target="_blank">🔴 Ver canal</a>
+                    <a class="btn secondary" href="https://www.youtube.com/@DarkMorgana23?sub_confirmation=1" target="_blank">⭐ Suscribirse</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTICIAS -->
+    <section id="noticias">
+        <h2>📰 Noticias Anime</h2>
+        <div class="grid grid-2" style="margin-bottom:15px;">
+            <div class="card">
+                <span class="tag">Noticia principal</span>
+                <img src="https://images.pexels.com/photos/8035414/pexels-photo-8035414.jpeg" alt="Noticia anime">
+                <h3>Nuevo anime isekai rompe récords de audiencia</h3>
+                <p style="font-size:0.85rem; opacity:0.9;">
+                    Un héroe invocado desde otro mundo está arrasando en Japón y en las plataformas de streaming.
+                </p>
+            </div>
+            <div class="card">
+                <span class="tag">Clips</span>
+                <h3>Clips destacados del canal</h3>
+                <p style="font-size:0.85rem; opacity:0.9;">
+                    Momentos épicos, fails, risas y momentos random de tus directos.  
+                    Cada visita al portal puede mostrar nuevos clips.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="card">
+                <h4>Nuevo tráiler shonen</h4>
+                <p style="font-size:0.8rem;">Un nuevo shonen promete ser el sucesor espiritual de clásicos legendarios.</p>
+            </div>
+            <div class="card">
+                <h4>Figura edición limitada</h4>
+                <p style="font-size:0.8rem;">Se anuncia figura exclusiva de colección con tirada muy limitada.</p>
+            </div>
+            <div class="card">
+                <h4>Evento anime 2026</h4>
+                <p style="font-size:0.8rem;">Convención con invitados sorpresa, conciertos y paneles especiales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ISEKAI -->
+    <section id="isekai">
+        <h2>🌌 Portal Anime Isekai</h2>
+        <p style="font-size:0.9rem; opacity:0.9; margin-bottom:10px;">
+            Viaja entre mundos: vota tus isekai favoritos y descubre nuevas historias.
+        </p>
+        <div class="grid grid-3">
+            <div class="card">
+                <img src="https://images.pexels.com/photos/8035413/pexels-photo-8035413.jpeg" alt="Re:Zero">
+                <h3>Re:Zero</h3>
+                <p style="font-size:0.8rem;">Un viaje doloroso y emocional a través de la muerte y el renacer.</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <button class="btn" style="margin-top:6px;">Ver ficha</button>
+            </div>
+            <div class="card">
+                <img src="https://images.pexels.com/photos/8035412/pexels-photo-8035412.jpeg" alt="Konosuba">
+                <h3>Konosuba</h3>
+                <p style="font-size:0.8rem;">Comedia absurda en un mundo de fantasía lleno de caos.</p>
+                <div class="stars">⭐⭐⭐⭐☆</div>
+                <button class="btn" style="margin-top:6px;">Ver ficha</button>
+            </div>
+            <div class="card">
+                <img src="https://images.pexels.com/photos/8035411/pexels-photo-8035411.jpeg" alt="Slime">
+                <h3>Tensei Slime</h3>
+                <p style="font-size:0.8rem;">Reencarnado como slime, pero con poder para cambiar el mundo.</p>
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <button class="btn" style="margin-top:6px;">Ver ficha</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUÍAS Y TRUCOS -->
+    <section id="guias">
+        <h2>🎮 Guías y Trucos de Juegos</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="tag">Genshin Impact</span>
+                <h3>Guía completa</h3>
+                <p style="font-size:0.85rem;">
+                    Builds, rutas de farmeo, equipos recomendados y consejos para avanzar sin perder recursos.
+                </p>
+                <button class="btn" style="margin-top:8px;">Ver guía</button>
+            </div>
+            <div class="card">
+                <span class="tag">Honkai Star Rail</span>
+                <h3>Equipos meta</h3>
+                <p style="font-size:0.85rem;">
+                    Composiciones fuertes, sinergias y tips para dominar el endgame.
+                </p>
+                <button class="btn" style="margin-top:8px;">Ver guía</button>
+            </div>
+            <div class="card">
+                <span class="tag">Blue Protocol</span>
+                <h3>Consejos iniciales</h3>
+                <p style="font-size:0.85rem;">
+                    Qué hacer al empezar, cómo no desperdiciar recursos y cómo progresar rápido.
+                </p>
+                <button class="btn" style="margin-top:8px;">Ver guía</button>
+            </div>
+            <div class="card">
+                <span class="tag">Otros juegos</span>
+                <h3>Trucos y secretos</h3>
+                <p style="font-size:0.85rem;">
+                    Pequeños trucos, curiosidades y secretos que hacen la diferencia en tus partidas.
+                </p>
+                <button class="btn" style="margin-top:8px;">Ver más</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AFILIACIONES Y DONACIONES -->
+    <section id="afiliaciones">
+        <h2>💰 Afiliaciones y Donaciones</h2>
         <div class="card">
-            <h3>🔥 Nuevo anime isekai rompe récords</h3>
-            <p>La temporada llega con un isekai que está arrasando en Japón...</p>
+            <h3>Apoya Otaku 24/7</h3>
+            <p style="font-size:0.9rem; opacity:0.9;">
+                Si te gusta este mundo que estamos construyendo, puedes apoyar el proyecto y ayudar a que siga creciendo.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
+                <a class="btn" href="#" target="_blank">💖 Donar con PayPal</a>
+                <a class="btn" href="#" target="_blank">☕ Apoyar en Ko‑fi</a>
+                <a class="btn" href="#" target="_blank">⭐ Patreon</a>
+            </div>
+
+            <h4 style="margin-top:18px;">🛒 Enlaces de afiliado</h4>
+            <ul style="font-size:0.85rem; margin-top:6px; padding-left:18px;">
+                <li><a href="#" target="_blank">Amazon – Manga y anime</a></li>
+                <li><a href="#" target="_blank">Figuras y merch</a></li>
+                <li><a href="#" target="_blank">Juegos y recargas</a></li>
+            </ul>
+
+            <div style="margin-top:18px; padding:12px; border-radius:10px; background:#ff2fb222;">
+                <strong>🔥 Apoya Otaku 24/7:</strong>
+                <p style="font-size:0.9rem; margin-top:4px;">
+                    Cada clic, cada donación y cada compra desde estos enlaces ayuda a mantener vivo este mundo.
+                </p>
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-            <h3>🎤 Anime Expo 2026</h3>
-            <p>Invitados sorpresa, paneles exclusivos y más contenido otaku.</p>
+    <!-- ZONA RESTRINGIDA -->
+    <section id="zona-restringida">
+        <h2>🟥 Zona Restringida</h2>
+        <div class="crime-box">
+            <h3>Acceso no autorizado</h3>
+            <p style="margin-top:8px; font-size:0.9rem;">
+                Escenario de crimen. Entrada temporalmente bloqueada.  
+                Este portal está sellado hasta nuevo aviso.
+            </p>
+            <div class="crime-lock">🔒</div>
         </div>
-    </div>
+    </section>
 
-    <h3 style="margin-top:20px;">Noticias pequeñas</h3>
-    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
-        <div class="card">Nuevo tráiler de Kimetsu no Yaiba</div>
-        <div class="card">Figura edición limitada anunciada</div>
-        <div class="card">Opening filtrado de la temporada</div>
-    </div>
-</section>
-
-<!-- Novias del día -->
-<section>
-    <h2>💘 Novias del Día</h2>
-    <div class="novias">
-        <div class="novia-card">Zero Two</div>
-        <div class="novia-card">Asuna</div>
-        <div class="novia-card">Rem</div>
-        <div class="novia-card">Makima</div>
-        <div class="novia-card">Yor Forger</div>
-    </div>
-</section>
-
-<!-- Guías de juegos -->
-<section>
-    <h2>🎮 Guías de Juegos Completas</h2>
-    <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
-        <div class="card">
-            <h3>Genshin Impact</h3>
-            <p>Guía completa de personajes, builds y rutas de farmeo.</p>
-        </div>
-
-        <div class="card">
-            <h3>Honkai Star Rail</h3>
-            <p>Estrategias, equipos meta y optimización de recursos.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Anime Isekai -->
-<section>
-    <h2>🌌 Mi Anime Isekai</h2>
-    <div class="card">
-        <h3>Lista completa</h3>
-        <ul>
-            <li>Re:Zero</li>
-            <li>Konosuba</li>
-            <li>Tensei Slime</li>
-            <li>Overlord</li>
-            <li>Shield Hero</li>
-        </ul>
-    </div>
-</section>
-
-<!-- Tienda -->
-<section>
-    <h2>🛒 Tienda Otaku 24/7</h2>
-    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
-        <a class="card" href="TU_LINK_AQUI">Figuras Anime</a>
-        <a class="card" href="TU_LINK_AQUI">Posters</a>
-        <a class="card" href="TU_LINK_AQUI">Camisetas</a>
-    </div>
-</section>
-
-<!-- Monetización -->
-<section>
-    <h2>💰 Apoya Otaku 24/7</h2>
-    <div class="card">
-        <p>Tu apoyo ayuda a que el canal siga activo 24/7.</p>
-
-        <div style="display:flex; gap:15px;">
-            <a class="btn" href="TU_LINK_AQUI">💖 Donar</a>
-            <a class="btn" href="TU_LINK_AQUI">⭐ Suscribirse</a>
-            <a class="btn" href="TU_LINK_AQUI">🛒 Tienda Afiliada</a>
-        </div>
-    </div>
-</section>
+</main>
 
 <footer>
     © 2026 Otaku 24/7 – Anime sin pausas, pasión sin límites
 </footer>
 
 <script>
-    // Modo oscuro/claro
-    document.getElementById("modo").onclick = () => {
-        document.body.classList.toggle("light");
-    };
+    const intro = document.getElementById('intro');
+    const enterBtn = document.getElementById('enter-btn');
+    const audio = document.getElementById('intro-audio');
+
+    enterBtn.addEventListener('click', () => {
+        intro.style.opacity = '0';
+        intro.style.transition = '0.6s';
+        setTimeout(() => { intro.style.display = 'none'; }, 600);
+        // Intento de reproducir música (el navegador puede pedir interacción extra)
+        audio.volume = 0.6;
+        audio.play().catch(() => {});
+    });
 </script>
 
 </body>
