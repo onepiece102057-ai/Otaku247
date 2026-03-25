@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otaku 24/7</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0f;
+            color: white;
+            transition: 0.3s;
+        }
+
+        /* Modo claro */
+        body.light {
+            background: #f2f2f2;
+            color: #111;
+        }
+
+        header {
+            background: linear-gradient(90deg, #ff00cc, #6600ff);
+            padding: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Botón modo oscuro/claro */
+        #modo {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: #ff00cc;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Portada */
+        .portada {
+            position: relative;
+            height: 380px;
+            background: url('https://i.imgur.com/8QfZQ7M.jpeg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portada h1 {
+            background: rgba(0,0,0,0.6);
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 3.2rem;
+            animation: entrada 2s ease-out;
+        }
+
+        @keyframes entrada {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Personaje anime animado */
+        .chibi {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 120px;
+            animation: flotar 3s infinite ease-in-out;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h2 {
+            border-left: 5px solid #ff00cc;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .noticia-grande {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .card {
+            background: #1a1a22;
+            padding: 15px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            background: #262633;
+        }
+
+        .novias {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+        }
+
+        .novia-card {
+            min-width: 180px;
+            background: #1a1a22;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .btn {
+            background: #ff00cc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff33dd;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background: #111;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>OTAKU 24/7</header>
+
+<!-- Botón modo oscuro/claro -->
+<div id="modo">🌙</div>
+
+<!-- Música de fondo -->
+<audio autoplay loop>
+    <source src="https://files.catbox.moe/3n6y4p.mp3" type="audio/mp3">
+</audio>
+
+<!-- Personaje chibi animado -->
+<img class="chibi" src="https://i.imgur.com/9tZQF5G.png">
+
+<!-- Portada -->
+<div class="portada">
+    <h1>Bienvenido a Otaku 24/7</h1>
+</div>
+
+<!-- Canal incrustado -->
+<section>
+    <h2>📺 Mi Canal en Vivo</h2>
+    <iframe width="100%" height="350" src="TU_LINK_AQUI" frameborder="0" allowfullscreen></iframe>
+</section>
+
+<!-- Noticias -->
+<section>
+    <h2>📰 Últimas Noticias</h2>
+
+    <div class="grid noticia-grande">
+        <div class="card">
+            <h3>🔥 Nuevo anime isekai rompe récords</h3>
+            <p>La temporada llega con un isekai que está arrasando en Japón...</p>
+        </div>
+
+        <div class="card">
+            <h3>🎤 Anime Expo 2026</h3>
+            <p>Invitados sorpresa, paneles exclusivos y más contenido otaku.</p>
+        </div>
+    </div>
+
+    <h3 style="margin-top:20px;">Noticias pequeñas</h3>
+    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="card">Nuevo tráiler de Kimetsu no Yaiba</div>
+        <div class="card">Figura edición limitada anunciada</div>
+        <div class="card">Opening filtrado de la temporada</div>
+    </div>
+</section>
+
+<!-- Novias del día -->
+<section>
+    <h2>💘 Novias del Día</h2>
+    <div class="novias">
+        <div class="novia-card">Zero Two</div>
+        <div class="novia-card">Asuna</div>
+        <div class="novia-card">Rem</div>
+        <div class="novia-card">Makima</div>
+        <div class="novia-card">Yor Forger</div>
+    </div>
+</section>
+
+<!-- Guías de juegos -->
+<section>
+    <h2>🎮 Guías de Juegos Completas</h2>
+    <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="card">
+            <h3>Genshin Impact</h3>
+            <p>Guía completa de personajes, builds y rutas de farmeo.</p>
+        </div>
+
+        <div class="card">
+            <h3>Honkai Star Rail</h3>
+            <p>Estrategias, equipos meta y optimización de recursos.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Anime Isekai -->
+<section>
+    <h2>🌌 Mi Anime Isekai</h2>
+    <div class="card">
+        <h3>Lista completa</h3>
+        <ul>
+            <li>Re:Zero</li>
+            <li>Konosuba</li>
+            <li>Tensei Slime</li>
+            <li>Overlord</li>
+            <li>Shield Hero</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Tienda -->
+<section>
+    <h2>🛒 Tienda Otaku 24/7</h2>
+    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+        <a class="card" href="TU_LINK_AQUI">Figuras Anime</a>
+        <a class="card" href="TU_LINK_AQUI">Posters</a>
+        <a class="card" href="TU_LINK_AQUI">Camisetas</a>
+    </div>
+</section>
+
+<!-- Monetización -->
+<section>
+    <h2>💰 Apoya Otaku 24/7</h2>
+    <div class="card">
+        <p>Tu apoyo ayuda a que el canal siga activo 24/7.</p>
+
+        <div style="display:flex; gap:15px;">
+            <a class="btn" href="TU_LINK_AQUI">💖 Donar</a>
+            <a class="btn" href="TU_LINK_AQUI">⭐ Suscribirse</a>
+            <a class="btn" href="TU_LINK_AQUI">🛒 Tienda Afiliada</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2026 Otaku 24/7 – Anime sin pausas, pasión sin límites
+</footer>
+
+<script>
+    // Modo oscuro/claro
+    document.getElementById("modo").onclick = () => {
+        document.body.classList.toggle("light");
+    };
+</script>
+
+</body>
+</html>
