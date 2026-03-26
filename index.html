@@ -1,294 +1,208 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otaku 24/7 – Mundo Isekai Oscuro</title>
-    <!-- Tailwind CSS para utilidades rápidas -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
-
-        /* ===== FONDO DINÁMICO ===== */
+        /* ===== FONDO SIMPLE LOCAL ===== */
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #0a0a0f 0%, #1a0f1f 50%, #0a0a0f 100%);
-            background-attachment: fixed;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: url('imagenes/fondo.png') no-repeat center center fixed;
+            background-size: cover;
             color: white;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
         }
 
         /* ===== PARTÍCULAS MÁGICAS ===== */
         .particulas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            background: url('https://i.imgur.com/3ZQ3ZyM.png');
-            opacity: 0.15;
-            animation: particulasMove 20s infinite linear;
+            background: url('imagenes/fondo.png');
+            opacity: 0.10;
+            animation: particulasMove 18s infinite linear;
             z-index: 1;
         }
 
         @keyframes particulasMove {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-400px); }
+            100% { transform: translateY(-300px); }
         }
 
-        /* ===== GUARDIANAS PERSONALIZADAS (Basadas en tu imagen) ===== */
-        .guardian-container {
+        /* ===== CHICAS FLOTANTES ===== */
+        .chica-izquierda,
+        .chica-derecha {
             position: fixed;
             top: 20%;
-            width: 320px;
-            height: 500px;
-            z-index: 10;
+            width: 220px;
+            height: auto;
+            animation: flotarChica 6s infinite ease-in-out;
             pointer-events: none;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 4;
         }
 
-        /* Personaje Izquierda: Half-Angel Half-Devil */
-        .chica-izquierda {
-            left: 0;
-            animation: flotarIzquierda 7s infinite ease-in-out;
+        .chica-izquierda { left: 1%; }
+        .chica-derecha { right: 1%; }
+
+        @keyframes flotarChica {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
         }
 
-        /* Personaje Derecha: The Dual Guardian */
-        .chica-derecha {
-            right: 0;
-            animation: flotarDerecha 8s infinite ease-in-out;
-        }
-
-        .guardian-img {
-            width: 200%; /* Para poder recortar la mitad de la imagen original */
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 25px rgba(255, 47, 178, 0.4));
-        }
-
-        /* Recorte para la chica de la izquierda */
-        .chica-izquierda .guardian-img {
-            object-position: left center;
-            transform: translateX(10%);
-        }
-
-        /* Recorte para la chica de la derecha */
-        .chica-derecha .guardian-img {
-            object-position: right center;
-            transform: translateX(-10%);
-            filter: drop-shadow(0 0 25px rgba(138, 43, 226, 0.4));
-        }
-
-        @keyframes flotarIzquierda {
-            0%, 100% { transform: translateY(0) rotate(-1deg); }
-            50% { transform: translateY(-35px) rotate(1deg); }
-        }
-
-        @keyframes flotarDerecha {
-            0%, 100% { transform: translateY(0) rotate(1deg); }
-            50% { transform: translateY(-25px) rotate(-1deg); }
-        }
-
-        /* Responsividad: Ocultar en móviles */
-        @media (max-width: 1100px) {
-            .guardian-container { display: none; }
-        }
-
-        /* ===== ESTILOS DE CONTENIDO ===== */
+        /* ===== PORTADAS ===== */
         .portada {
-            padding: 180px 20px;
+            padding: 140px 40px;
             text-align: center;
             position: relative;
-            z-index: 5;
+            z-index: 2;
         }
 
         .portada h1 {
-            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-size: 70px;
             font-weight: 900;
-            text-shadow: 0 0 40px #ff2fb2;
-            text-transform: uppercase;
-            line-height: 1;
+            text-shadow: 0 0 25px #ff2fb2;
         }
 
+        .portada p {
+            font-size: 24px;
+            color: #ddd;
+        }
+
+        /* ===== ARTÍCULOS ===== */
         article {
-            background: rgba(10, 10, 18, 0.75);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 47, 178, 0.2);
-            padding: 50px;
-            margin: 80px auto;
-            width: 85%;
-            max-width: 900px;
-            border-radius: 30px;
-            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            padding: 50px 30px;
+            margin: 40px auto;
+            width: 90%;
+            border-radius: 12px;
+            z-index: 2;
             position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
         }
 
         article h2 {
-            border-left: 6px solid #ff2fb2;
-            padding-left: 20px;
+            border-left: 4px solid #ff2fb2;
+            padding-left: 10px;
             font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 40px;
-            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .card {
-            background: rgba(20, 20, 30, 0.5);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #ff2fb2;
-            box-shadow: 0 10px 30px rgba(255, 47, 178, 0.2);
-        }
-
-        .btn-apoyo {
-            background: linear-gradient(45deg, #ff2fb2, #8a2be2);
-            padding: 15px 35px;
-            border-radius: 15px;
-            font-weight: bold;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-apoyo:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
-        }
-
-        nav {
-            background: rgba(5, 5, 10, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 47, 178, 0.2);
+            background: rgba(20,20,30,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- PARTÍCULAS -->
     <div class="particulas"></div>
 
-    <!-- GUARDIANAS FLOTANTES -->
-    <div class="guardian-container chica-izquierda">
-        <img class="guardian-img" src="https://i.imgur.com/0iK8U8J.png" alt="[Guardian Half-Angel Half-Devil]">
-    </div>
-    
-    <div class="guardian-container chica-derecha">
-        <img class="guardian-img" src="https://i.imgur.com/0iK8U8J.png" alt="[The Dual Guardian]">
-    </div>
+    <!-- CHICAS FLOTANTES -->
+    <img class="chica-izquierda" src="imagenes/chica_izquierda.png">
+    <img class="chica-derecha" src="imagenes/chica_derecha.png">
 
-    <!-- NAVEGACIÓN -->
-    <nav class="fixed top-0 w-full z-50 py-4 px-10 flex justify-between items-center">
-        <div class="text-3xl font-black italic tracking-tighter">OTAKU <span class="text-[#ff2fb2]">24/7</span></div>
-        <div class="hidden md:flex gap-8 font-bold uppercase text-xs tracking-[0.2em]">
-            <a href="#canal" class="hover:text-[#ff2fb2] transition">Contenido</a>
-            <a href="#isekai" class="hover:text-[#ff2fb2] transition">Isekai</a>
-            <a href="#guias" class="hover:text-[#ff2fb2] transition">Guías</a>
-            <a href="#apoyo" class="hover:text-[#ff2fb2] transition">Apoyar</a>
-        </div>
-    </nav>
-
-    <!-- SECCIÓN: BIENVENIDA -->
+    <!-- ===== PORTADA 1: BIENVENIDA ===== -->
     <section class="portada" id="bienvenida">
-        <div class="mb-4 text-[#ff2fb2] font-bold tracking-[0.5em] text-sm">PORTAL ABIERTO</div>
         <h1>BIENVENIDA AL MUNDO ISEKAI</h1>
-        <p class="mt-6 opacity-70">Las guardianas gemelas del equilibrio te dan la bienvenida a tu nueva realidad.</p>
+        <p>Has cruzado el portal. Las guardianas te estaban esperando.</p>
     </section>
 
-    <!-- SECCIÓN: CANAL -->
+    <!-- ===== PORTADA 2: CANAL ===== -->
     <section class="portada" id="canal">
-        <h1 style="text-shadow: 0 0 25px #8a2be2;">EL SANTUARIO</h1>
-        <p>Vídeos, directos y la mayor comunidad de aventureros del otro mundo.</p>
+        <h1>MI CANAL</h1>
+        <p>Anime, gaming y contenido épico todos los días.</p>
     </section>
 
     <article>
-        <h2>Novedades Dimensionales</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="card">
-                <div class="text-[#ff2fb2] text-xs font-bold mb-2">ACTUALIZACIÓN</div>
-                <h3 class="text-xl font-bold mb-3">Nuevos Ránkings de Temporada</h3>
-                <p class="text-sm opacity-60">Hemos actualizado la lista de los mejores Isekai de este mes. ¡Vota por tu favorito!</p>
-            </div>
-            <div class="card">
-                <div class="text-[#8a2be2] text-xs font-bold mb-2">EVENTO</div>
-                <h3 class="text-xl font-bold mb-3">Directo de Lore Oscuro</h3>
-                <p class="text-sm opacity-60">Mañana exploraremos los secretos más profundos de las guardianas en un especial de 4 horas.</p>
-            </div>
+        <h2>Noticias del Canal</h2>
+        <div class="card">
+            <h3>Nueva serie isekai rompe récords</h3>
+            <p>El mundo mágico está más vivo que nunca.</p>
+        </div>
+        <div class="card">
+            <h3>Evento especial del canal</h3>
+            <p>Momentos épicos, risas y caos asegurado.</p>
         </div>
     </article>
 
-    <!-- SECCIÓN: ISEKAI -->
+    <!-- ===== PORTADA 3: ISEKAI ===== -->
     <section class="portada" id="isekai">
-        <h1 style="text-shadow: 0 0 30px #ff2fb2;">PORTAL MÁGICO</h1>
-        <p>¿Dónde ver tus animes favoritos? Aquí tienes los accesos directos.</p>
+        <h1>PORTAL ISEKAI</h1>
+        <p>Explora mundos mágicos, vota tus animes favoritos y descubre dónde verlos.</p>
     </section>
 
     <article>
-        <h2>Biblioteca de Mundos</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div class="card text-center group">
-                <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">⚔️</div>
-                <h3 class="font-black text-lg">RE:ZERO</h3>
-                <p class="text-xs mt-2 text-[#ff2fb2]">Ver en Crunchyroll</p>
-            </div>
-            <div class="card text-center group">
-                <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🎭</div>
-                <h3 class="font-black text-lg">KONOSUBA</h3>
-                <p class="text-xs mt-2 text-[#ff2fb2]">Ver en Netflix</p>
-            </div>
-            <div class="card text-center group">
-                <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🛡️</div>
-                <h3 class="font-black text-lg">SLIME</h3>
-                <p class="text-xs mt-2 text-[#ff2fb2]">Ver en Crunchyroll</p>
-            </div>
+        <h2>Animes Isekai</h2>
+        <div class="card">
+            <h3>Re:Zero</h3>
+            <p>Disponible en: Crunchyroll</p>
+        </div>
+        <div class="card">
+            <h3>Konosuba</h3>
+            <p>Disponible en: Netflix</p>
+        </div>
+        <div class="card">
+            <h3>Tensei Slime</h3>
+            <p>Disponible en: Crunchyroll</p>
         </div>
     </article>
 
-    <!-- SECCIÓN: APOYO -->
+    <!-- ===== PORTADA 4: GUÍAS ===== -->
+    <section class="portada" id="guias">
+        <h1>GUÍAS Y TRUCOS</h1>
+        <p>Consejos, builds y estrategias para tus juegos favoritos.</p>
+    </section>
+
+    <article>
+        <h2>Guías y Consejos</h2>
+        <div class="card">
+            <h3>Genshin Impact – Progresar rápido</h3>
+            <p>Ruta diaria, artefactos y equipo recomendado.</p>
+        </div>
+        <div class="card">
+            <h3>Honkai: Star Rail – Equipos meta</h3>
+            <p>Composiciones fuertes para el endgame.</p>
+        </div>
+    </article>
+
+    <!-- ===== PORTADA 5: APOYO ===== -->
     <section class="portada" id="apoyo">
-        <h1>OFRENDA AL CANAL</h1>
-        <p>Mantén el portal encendido y apoya la creación de contenido épico.</p>
+        <h1>APOYA EL PROYECTO</h1>
+        <p>Ayuda a mantener Otaku 24/7 activo y sin anuncios.</p>
     </section>
 
-    <article class="text-center">
-        <h2>Canales de Soporte</h2>
-        <div class="flex flex-wrap justify-center gap-4 mt-8">
-            <a href="#" class="btn-apoyo"><i class="fab fa-paypal"></i> Donar vía PayPal</a>
-            <a href="#" class="btn-apoyo" style="background: #111; border: 1px solid #ff2fb2;"><i class="fab fa-patreon"></i> Ser Patrón</a>
-            <a href="#" class="btn-apoyo" style="background: #e67e22;"><i class="fas fa-coffee"></i> Invitame un Ko-fi</a>
+    <article>
+        <h2>Donaciones y Afiliaciones</h2>
+        <div class="card">
+            <p>Elige tu forma de apoyar:</p>
+            <button>PayPal</button>
+            <button>Ko‑fi</button>
+            <button>Patreon</button>
+            <button>Amazon Afiliados</button>
         </div>
     </article>
 
-    <!-- ZONA RESTRINGIDA -->
+    <!-- ===== PORTADA 6: ZONA RESTRINGIDA ===== -->
     <section class="portada" id="zona">
-        <h1 class="text-red-500" style="text-shadow: 0 0 20px rgba(255,0,0,0.4);">CORRUPCIÓN DETECTADA</h1>
+        <h1>ZONA RESTRINGIDA</h1>
+        <p>Advertencia: contenido bloqueado.</p>
     </section>
 
-    <article class="border-2 border-red-500/50 bg-red-950/10">
-        <div class="flex items-center gap-6">
-            <div class="text-5xl text-red-500"><i class="fas fa-skull-crossbones"></i></div>
-            <div>
-                <h2 class="border-none p-0 mb-2 text-red-500">Área Prohibida</h2>
-                <p class="opacity-70 text-sm">Este contenido ha sido sellado por el consejo de guardianas. Se requiere nivel de maná 99.</p>
-            </div>
+    <article>
+        <h2>Acceso Denegado</h2>
+        <div class="card" style="border:2px solid red;">
+            <h3>Zona en mantenimiento</h3>
+            <p>Este portal está bloqueado temporalmente.</p>
         </div>
     </article>
-
-    <footer class="py-20 text-center opacity-30 text-[10px] tracking-[0.3em]">
-        <p>&copy; 2024 OTAKU 24/7 - SISTEMA OPERATIVO ISEKAI V.2.0</p>
-    </footer>
 
 </body>
 </html>
