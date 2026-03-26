@@ -1,209 +1,288 @@
-/* ===== ESTILOS GENERALES ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Otaku 24/7</title>
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #05050a;
-    color: #fff;
-    overflow-x: hidden;
-}
+    <style>
+        /* ===== ESTILOS GENERALES ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Poppins', sans-serif;
+            background:#05050a;
+            color:#fff;
+            overflow-x:hidden;
+        }
+        a { color:inherit; text-decoration:none; }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
+        /* ===== MENÚ ===== */
+        header {
+            position:sticky;
+            top:0;
+            z-index:50;
+            background:rgba(5,5,10,0.95);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid #222;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:12px 20px;
+        }
+        .logo { display:flex; align-items:center; gap:10px; }
+        .logo-mark {
+            width:32px; height:32px;
+            border-radius:10px;
+            border:2px solid #fff;
+            display:flex; align-items:center; justify-content:center;
+            font-size:0.8rem;
+        }
+        .logo-text { font-weight:600; letter-spacing:1px; }
 
-/* ===== MENÚ SUPERIOR ===== */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(5, 5, 10, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #222;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-}
+        nav { display:flex; gap:15px; font-size:0.9rem; }
+        nav a {
+            padding:6px 10px;
+            border-radius:999px;
+            transition:0.2s;
+        }
+        nav a:hover { background:#ff2fb233; }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        /* ===== CHIBI ===== */
+        .chibi-fixed {
+            position:fixed;
+            bottom:15px; left:15px;
+            width:80px; height:80px;
+            border-radius:50%;
+            background:radial-gradient(circle at top, #ff2fb2, #6b4bff);
+            display:flex; align-items:center; justify-content:center;
+            font-size:2.2rem;
+            box-shadow:0 0 18px #6b4bffaa;
+            animation:float 3s ease-in-out infinite;
+            z-index:40;
+        }
+        @keyframes float {
+            0%,100% { transform:translateY(0); }
+            50% { transform:translateY(-10px); }
+        }
 
-.logo-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    border: 2px solid #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-}
+        /* ===== CONTENIDO ===== */
+        main { padding:20px; max-width:1100px; margin:0 auto; }
+        section { margin:30px 0; }
+        h2 {
+            font-size:1.4rem;
+            margin-bottom:12px;
+            border-left:4px solid #ff2fb2;
+            padding-left:8px;
+        }
 
-.logo-text {
-    font-weight: 600;
-    letter-spacing: 1px;
-}
+        /* ===== TARJETAS ===== */
+        .card {
+            background:#111;
+            border-radius:12px;
+            padding:12px;
+            box-shadow:0 0 12px #000;
+            transition:0.2s;
+        }
+        .card:hover {
+            transform:translateY(-3px);
+            box-shadow:0 0 18px #000;
+        }
+        .tag {
+            display:inline-block;
+            font-size:0.7rem;
+            padding:2px 8px;
+            border-radius:999px;
+            background:#ff2fb233;
+            margin-bottom:4px;
+        }
+        .btn {
+            padding:8px 16px;
+            border-radius:999px;
+            background:#ff2fb2;
+            border:none;
+            color:#fff;
+            font-size:0.85rem;
+            font-weight:600;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+        }
 
-nav {
-    display: flex;
-    gap: 15px;
-    font-size: 0.9rem;
-}
+        /* ===== GRID ===== */
+        .grid { display:grid; gap:15px; }
+        @media(min-width:800px){
+            .grid-3 { grid-template-columns:repeat(3,1fr); }
+            .grid-2 { grid-template-columns:repeat(2,1fr); }
+        }
 
-nav a {
-    padding: 6px 10px;
-    border-radius: 999px;
-    transition: 0.2s;
-}
+        /* ===== ZONA RESTRINGIDA ===== */
+        .crime-box {
+            background:#220000;
+            border:2px solid red;
+            border-radius:14px;
+            padding:25px;
+            text-align:center;
+            animation:glitch 1s infinite;
+        }
+        .crime-lock {
+            font-size:3rem;
+            margin-top:10px;
+            animation:lockwiggle 2s infinite;
+        }
+        @keyframes glitch {
+            0% { transform:skew(0deg); }
+            20% { transform:skew(1deg); }
+            40% { transform:skew(-1deg); }
+            60% { transform:skew(0.5deg); }
+            80% { transform:skew(-0.5deg); }
+            100% { transform:skew(0deg); }
+        }
+        @keyframes lockwiggle {
+            0%,100% { transform:rotate(0deg); }
+            50% { transform:rotate(8deg); }
+        }
 
-nav a:hover {
-    background: #ff2fb233;
-}
+        footer {
+            margin-top:40px;
+            padding:20px;
+            text-align:center;
+            font-size:0.8rem;
+            color:#aaa;
+            border-top:1px solid #222;
+        }
 
-/* ===== CHIBI FIJO ===== */
-.chibi-fixed {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: radial-gradient(circle at top, #ff2fb2, #6b4bff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    box-shadow: 0 0 18px #6b4bffaa;
-    animation: float 3s ease-in-out infinite;
-    z-index: 40;
-}
+        /* ===== PORTAL ISEKAI ===== */
+        #intro {
+            text-align:center;
+            padding:50px;
+        }
+    </style>
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const intro = document.getElementById("intro");
+            const enterBtn = document.getElementById("enter-btn");
+            const audio = document.getElementById("intro-audio");
 
-/* ===== CONTENIDO GENERAL ===== */
-main {
-    padding: 20px;
-    max-width: 1100px;
-    margin: 0 auto;
-}
+            if (enterBtn) {
+                enterBtn.addEventListener("click", () => {
+                    intro.style.opacity = "0";
+                    intro.style.transition = "0.6s";
 
-section {
-    margin: 30px 0;
-}
+                    setTimeout(() => {
+                        intro.style.display = "none";
+                    }, 600);
 
-h2 {
-    font-size: 1.4rem;
-    margin-bottom: 12px;
-    border-left: 4px solid #ff2fb2;
-    padding-left: 8px;
-}
+                    if (audio) {
+                        audio.volume = 0.6;
+                        audio.play().catch(() => {});
+                    }
+                });
+            }
+        });
+    </script>
 
-/* ===== TARJETAS ===== */
-.card {
-    background: #111;
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 0 12px #000;
-    transition: 0.2s;
-}
+</head>
+<body>
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 18px #000;
-}
+<header>
+    <div class="logo">
+        <div class="logo-mark">O24</div>
+        <div class="logo-text">Otaku 24/7</div>
+    </div>
+    <nav>
+        <a href="#portal">Portal</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#isekai">Isekai</a>
+        <a href="#guias">Guías</a>
+        <a href="#apoyo">Apoyo</a>
+        <a href="#zona">Zona X</a>
+    </nav>
+</header>
 
-.card img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 8px;
-}
+<div class="chibi-fixed">🧙‍♂️</div>
 
-.tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #ff2fb233;
-    margin-bottom: 4px;
-}
+<main>
 
-.btn {
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: #ff2fb2;
-    border: none;
-    color: #fff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
+    <!-- PORTAL ISEKAI -->
+    <section id="portal">
+        <audio id="intro-audio" src="https://suno.com/s/koGX21lYHZLnAWBH"></audio>
 
-.btn.secondary {
-    background: #222;
-}
+        <div id="intro">
+            <h1>🌌 Portal Isekai</h1>
+            <p>Has sido invocado a otro mundo…</p>
+            <button id="enter-btn" class="btn">Entrar</button>
+        </div>
+    </section>
 
-/* ===== GRID ===== */
-.grid {
-    display: grid;
-    gap: 15px;
-}
+    <!-- NOTICIAS -->
+    <section id="noticias">
+        <h2>Noticias Anime</h2>
 
-@media(min-width: 800px) {
-    .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid-2 { grid-template-columns: repeat(2, 1fr); }
-}
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="tag">Nuevo</span>
+                <h3>Nuevo anime isekai rompe récords</h3>
+                <p>Un héroe invocado está arrasando en Japón.</p>
+            </div>
 
-/* ===== ZONA RESTRINGIDA ===== */
-.crime-box {
-    background: #220000;
-    border: 2px solid red;
-    border-radius: 14px;
-    padding: 25px;
-    text-align: center;
-    animation: glitch 1s infinite;
-}
+            <div class="card">
+                <span class="tag">Clip</span>
+                <h3>Momentos épicos del canal</h3>
+                <p>Fails, risas y momentos random.</p>
+            </div>
+        </div>
+    </section>
 
-.crime-lock {
-    font-size: 3rem;
-    margin-top: 10px;
-    animation: lockwiggle 2s infinite;
-}
+    <!-- ISEKAI -->
+    <section id="isekai">
+        <h2>Portal Isekai</h2>
 
-@keyframes glitch {
-    0% { transform: skew(0deg); }
-    20% { transform: skew(1deg); }
-    40% { transform: skew(-1deg); }
-    60% { transform: skew(0.5deg); }
-    80% { transform: skew(-0.5deg); }
-    100% { transform: skew(0deg); }
-}
+        <div class="grid grid-3">
+            <div class="card"><h3>Re:Zero</h3><div class="stars">⭐⭐⭐⭐⭐</div></div>
+            <div class="card"><h3>Konosuba</h3><div class="stars">⭐⭐⭐⭐☆</div></div>
+            <div class="card"><h3>Tensei Slime</h3><div class="stars">⭐⭐⭐⭐⭐</div></div>
+        </div>
+    </section>
 
-@keyframes lockwiggle {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(8deg); }
-}
+    <!-- GUIAS -->
+    <section id="guias">
+        <h2>Guías y Trucos</h2>
 
-/* ===== FOOTER ===== */
-footer {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #aaa;
-    border-top: 1px solid #222;
-}
+        <div class="grid grid-2">
+            <div class="card"><span class="tag">Genshin</span><h3>Guía completa</h3></div>
+            <div class="card"><span class="tag">HSR</span><h3>Equipos meta</h3></div>
+        </div>
+    </section>
+
+    <!-- APOYO -->
+    <section id="apoyo">
+        <h2>Apoya el proyecto</h2>
+
+        <div class="card">
+            <h3>Donaciones</h3>
+            <a class="btn" href="#">PayPal</a>
+            <a class="btn" href="#">Ko‑fi</a>
+            <a class="btn" href="#">Patreon</a>
+        </div>
+    </section>
+
+    <!-- ZONA RESTRINGIDA -->
+    <section id="zona">
+        <h2>Zona Restringida</h2>
+
+        <div class="crime-box">
+            <h3>Acceso no autorizado</h3>
+            <p>Este portal está bloqueado temporalmente.</p>
+            <div class="crime-lock">🔒</div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Otaku 24/7
+</footer>
+
+</body>
+</html>
