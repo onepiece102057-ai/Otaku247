@@ -12,7 +12,6 @@
             color: white;
         }
 
-        /* NAVBAR */
         header {
             background: #111;
             padding: 15px 30px;
@@ -29,32 +28,28 @@
             color: #ff2fb2;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
         }
 
-        /* HERO PORTADA */
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 80px 40px;
-            background: linear-gradient(to right, #0a0a0f, #1a1a22);
-            margin-bottom: 60px;
+        /* PORTADAS */
+        .portada {
+            padding: 100px 40px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 4px solid #ff2fb2;
         }
 
-        .hero-text {
-            max-width: 50%;
+        .portada h1 {
+            font-size: 60px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff2fb2;
         }
 
-        .hero h1 {
-            font-size: 50px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 25px;
+        .portada p {
+            font-size: 22px;
+            max-width: 700px;
+            margin: auto;
             color: #ddd;
         }
 
@@ -67,60 +62,83 @@
             font-size: 20px;
             cursor: pointer;
             font-weight: bold;
+            margin-top: 25px;
         }
 
-        .hero img {
-            width: 420px;
-            border-radius: 10px;
-        }
-
-        /* SECCIONES */
-        section {
-            padding: 60px 20px;
-            margin-bottom: 40px;
+        /* ARTÍCULOS */
+        article {
             background: #111;
-            border-radius: 12px;
+            padding: 50px 30px;
+            margin: 40px auto;
             width: 90%;
-            margin-left: auto;
-            margin-right: auto;
+            border-radius: 12px;
         }
 
-        h2 {
+        article h2 {
             border-left: 4px solid #ff2fb2;
             padding-left: 10px;
+            font-size: 32px;
             margin-bottom: 20px;
-            font-size: 30px;
-            font-weight: 700;
-        }
-
-        .grid {
-            display: grid;
-            gap: 15px;
-        }
-
-        @media(min-width: 800px) {
-            .grid-2 { grid-template-columns: repeat(2, 1fr); }
-            .grid-3 { grid-template-columns: repeat(3, 1fr); }
         }
 
         .card {
             background: #1a1a22;
             padding: 20px;
             border-radius: 10px;
-            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* ISEKAI IMÁGENES */
+        .isekai-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        @media(min-width: 800px) {
+            .isekai-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .isekai-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .isekai-card button {
+            margin-top: 10px;
+            width: 100%;
         }
 
         /* ZONA RESTRINGIDA */
-        .crime-box {
+        .crime {
             background: #220000;
-            border: 2px solid red;
-            padding: 25px;
-            border-radius: 10px;
+            border: 3px solid red;
+            padding: 30px;
             text-align: center;
-            font-size: 20px;
+            border-radius: 12px;
+            position: relative;
         }
 
-        /* CHIBI */
+        .crime img {
+            width: 100%;
+            border-radius: 10px;
+            opacity: 0.8;
+        }
+
+        .cinta {
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            transform: rotate(-15deg);
+            background: yellow;
+            color: black;
+            padding: 10px 40px;
+            font-weight: bold;
+            font-size: 20px;
+            border: 2px solid black;
+        }
+
         .chibi {
             position: fixed;
             bottom: 20px;
@@ -141,8 +159,7 @@
 <header>
     <div><strong style="font-size:22px;">Otaku 24/7</strong></div>
     <nav>
-        <a href="#portal">Portal</a>
-        <a href="#noticias">Noticias</a>
+        <a href="#canal">Canal</a>
         <a href="#isekai">Isekai</a>
         <a href="#guias">Guías</a>
         <a href="#apoyo">Apoyo</a>
@@ -152,78 +169,121 @@
 
 <div class="chibi">🧙‍♂️</div>
 
-<!-- PORTADA -->
-<section class="hero" id="portal">
-    <div class="hero-text">
-        <h1>BIENVENIDO A OTAKU 24/7</h1>
-        <p>Tu plataforma definitiva para Anime, Gaming y Terror.  
-        Transmitiendo contenido premium las 24 horas.</p>
-        <button class="btn">Ver Ahora</button>
-    </div>
-
-    <img src="https://i.imgur.com/4ZQZ4Zy.png" alt="Personaje anime">
+<!-- PORTADA 1: TU CANAL -->
+<section class="portada" id="canal" style="background-image:url('https://i.imgur.com/4ZQZ4Zy.png');">
+    <h1>MI CANAL</h1>
+    <p>Bienvenido a Otaku 24/7. Anime, gaming y contenido épico todos los días.</p>
+    <button class="btn">Entrar al Canal</button>
 </section>
 
 <!-- NOTICIAS -->
-<section id="noticias">
-    <h2>📰 Noticias Anime</h2>
-
-    <div class="grid grid-2">
-        <div class="card">
-            <h3 style="font-size:22px;">Nuevo anime isekai rompe récords</h3>
-            <p>Un héroe invocado está arrasando en Japón.</p>
-        </div>
-
-        <div class="card">
-            <h3 style="font-size:22px;">Momentos épicos del canal</h3>
-            <p>Fails, risas y momentos random.</p>
-        </div>
-    </div>
-</section>
-
-<!-- ISEKAI -->
-<section id="isekai">
-    <h2>🌠 Portal Isekai</h2>
-
-    <div class="grid grid-3">
-        <div class="card"><h3 style="font-size:22px;">Re:Zero</h3></div>
-        <div class="card"><h3 style="font-size:22px;">Konosuba</h3></div>
-        <div class="card"><h3 style="font-size:22px;">Tensei Slime</h3></div>
-    </div>
-</section>
-
-<!-- GUIAS -->
-<section id="guias">
-    <h2>🎮 Guías y Trucos</h2>
-
-    <div class="grid grid-2">
-        <div class="card"><h3 style="font-size:22px;">Guía Genshin Impact</h3></div>
-        <div class="card"><h3 style="font-size:22px;">Equipos Meta HSR</h3></div>
-    </div>
-</section>
-
-<!-- APOYO -->
-<section id="apoyo">
-    <h2>💰 Apoya el Proyecto</h2>
+<article>
+    <h2>📰 Noticias</h2>
 
     <div class="card">
-        <p>Ayuda a mantener Otaku 24/7</p>
+        <h3>Nuevo anime isekai rompe récords</h3>
+        <p>El anime más visto del mes en Japón.</p>
+    </div>
+
+    <div class="card">
+        <h3>Evento especial del canal</h3>
+        <p>Clips, risas y momentos épicos.</p>
+    </div>
+</article>
+
+<!-- PORTADA 2: ISEKAI -->
+<section class="portada" id="isekai" style="background-image:url('https://i.imgur.com/8gk8V0W.jpeg');">
+    <h1>PORTAL ISEKAI</h1>
+    <p>Explora mundos mágicos, vota tus animes favoritos y descubre dónde verlos.</p>
+</section>
+
+<article>
+    <h2>🌠 Animes Isekai</h2>
+
+    <div class="isekai-grid">
+
+        <div class="isekai-card card">
+            <img src="https://i.imgur.com/1Q9Z1ZB.jpeg">
+            <h3>Re:Zero</h3>
+            <button class="btn">Votar</button>
+            <p>Disponible en: Crunchyroll</p>
+        </div>
+
+        <div class="isekai-card card">
+            <img src="https://i.imgur.com/5z0T0Qw.jpeg">
+            <h3>Konosuba</h3>
+            <button class="btn">Votar</button>
+            <p>Disponible en: Netflix</p>
+        </div>
+
+        <div class="isekai-card card">
+            <img src="https://i.imgur.com/3z8Yg0M.jpeg">
+            <h3>Tensei Slime</h3>
+            <button class="btn">Votar</button>
+            <p>Disponible en: Crunchyroll</p>
+        </div>
+
+    </div>
+</article>
+
+<!-- PORTADA 3: GUÍAS, TRUCOS Y CONSEJOS -->
+<section class="portada" id="guias" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
+    <h1>GUÍAS Y TRUCOS</h1>
+    <p>Consejos, builds y estrategias para tus juegos favoritos.</p>
+</section>
+
+<article>
+    <h2>🎮 Guías, Trucos y Consejos</h2>
+
+    <div class="card">
+        <h3>Genshin Impact – Progresar rápido sin gastar</h3>
+        <p>Ruta diaria, resina, artefactos y equipo recomendado para avanzar sin perder tiempo.</p>
+    </div>
+
+    <div class="card">
+        <h3>Honkai: Star Rail – Equipos meta</h3>
+        <p>Composiciones fuertes para jefes, memoria del caos y contenido endgame.</p>
+    </div>
+
+    <div class="card">
+        <h3>Consejos generales</h3>
+        <p>Ajustes gráficos, control, configuración de mando y trucos para mejorar tu rendimiento.</p>
+    </div>
+</article>
+
+<!-- PORTADA 4: APOYO -->
+<section class="portada" id="apoyo" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
+    <h1>APOYA EL PROYECTO</h1>
+    <p>Ayuda a mantener Otaku 24/7 activo y sin anuncios.</p>
+</section>
+
+<article>
+    <h2>💰 Donaciones y Afiliaciones</h2>
+
+    <div class="card">
         <button class="btn">PayPal</button>
         <button class="btn">Ko‑fi</button>
         <button class="btn">Patreon</button>
+        <button class="btn">Amazon Afiliados</button>
     </div>
+</article>
+
+<!-- PORTADA 5: ZONA RESTRINGIDA -->
+<section class="portada" id="zona" style="background-image:url('https://i.imgur.com/9u2Jk0N.jpeg');">
+    <h1>ZONA RESTRINGIDA</h1>
+    <p>Advertencia: contenido bloqueado.</p>
 </section>
 
-<!-- ZONA X -->
-<section id="zona">
-    <h2>🟥 Zona Restringida</h2>
+<article>
+    <h2>🟥 Acceso Denegado</h2>
 
-    <div class="crime-box">
-        <h3 style="font-size:26px;">Acceso no autorizado</h3>
+    <div class="crime">
+        <div class="cinta">CRIME SCENE</div>
+        <img src="https://i.imgur.com/9u2Jk0N.jpeg">
+        <h3>Acceso no autorizado</h3>
         <p>Este portal está bloqueado temporalmente.</p>
-        <div style="font-size: 50px;">🔒</div>
     </div>
-</section>
+</article>
 
 </body>
 </html>
