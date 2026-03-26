@@ -1,18 +1,40 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ilo">
 <head>
     <meta charset="UTF-8">
-    <title>Otaku 24/7 – Mundo Isekai Oscuro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otaku 24/7 – Lubong ti Isekai a Nasipnget</title>
+    <!-- Tailwind CSS ken Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff2fb2',
+                        magic: '#8a2be2',
+                        dark: '#0a0a0f',
+                        card: 'rgba(20, 20, 30, 0.8)'
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        /* ===== FONDO MUNDO ISEKAI OSCURO ===== */
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
+        
+        body { 
             margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: url('https://i.imgur.com/8gk8V0W.jpeg') no-repeat center center fixed;
             background-size: cover;
             animation: isekaiMove 40s infinite ease-in-out;
             color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         @keyframes isekaiMove {
@@ -21,201 +43,234 @@
             100% { background-position: 0% 0%; }
         }
 
-        /* ===== PARTÍCULAS MÁGICAS ===== */
+        /* MAGICAL PARTICLES */
         .particulas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            background: url('https://i.imgur.com/3ZQ3ZyM.png');
-            opacity: 0.22;
-            animation: particulasMove 18s infinite linear;
+            background: radial-gradient(circle, #fff 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.15;
+            animation: particulasMove 20s infinite linear;
             z-index: 1;
         }
 
         @keyframes particulasMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-300px); }
+            from { transform: translateY(0); }
+            to { transform: translateY(-1000px); }
         }
 
-        /* ===== FLOTANTES IZQUIERDA Y DERECHA ===== */
-        .flotante-izquierda,
-        .flotante-derecha {
+        /* FLOATING ORBS */
+        .flotante-izquierda, .flotante-derecha {
             position: fixed;
-            top: 30%;
-            width: 150px;
-            height: 150px;
+            top: 30%; width: 200px; height: 200px;
             border-radius: 50%;
             animation: flotarLado 7s infinite ease-in-out;
             pointer-events: none;
-            filter: blur(5px);
+            filter: blur(40px);
             z-index: 3;
+            opacity: 0.5;
         }
-
-        .flotante-izquierda {
-            left: 2%;
-            background: radial-gradient(circle, #ff2fb2aa, #00000000);
-        }
-
-        .flotante-derecha {
-            right: 2%;
-            background: radial-gradient(circle, #8a2be2aa, #00000000);
-        }
+        .flotante-izquierda { left: -50px; background: radial-gradient(circle, #ff2fb2, transparent); }
+        .flotante-derecha { right: -50px; background: radial-gradient(circle, #8a2be2, transparent); }
 
         @keyframes flotarLado {
-            0%,100% { transform: translateY(0); opacity: 0.7; }
-            50% { transform: translateY(-30px); opacity: 1; }
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-40px) scale(1.1); opacity: 0.7; }
         }
 
-        /* ===== PORTADAS ===== */
+        /* PORTADAS */
         .portada {
-            padding: 140px 40px;
+            padding: 160px 20px;
             text-align: center;
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
 
         .portada h1 {
-            font-size: 70px;
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
             font-weight: 900;
-            text-shadow: 0 0 25px #ff2fb2;
+            text-shadow: 0 0 30px #ff2fb2;
+            text-transform: uppercase;
+            letter-spacing: -2px;
         }
 
         .portada p {
-            font-size: 24px;
-            color: #ddd;
+            font-size: 1.5rem;
+            color: #ccc;
+            max-width: 800px;
+            margin: 20px auto;
         }
 
-        /* ===== ARTÍCULOS ===== */
+        /* OVERLAY FOR CONTENT */
         article {
-            background: rgba(0,0,0,0.6);
-            padding: 50px 30px;
-            margin: 40px auto;
-            width: 90%;
-            border-radius: 12px;
-            z-index: 2;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 47, 178, 0.2);
             position: relative;
+            z-index: 10;
         }
 
-        article h2 {
-            border-left: 4px solid #ff2fb2;
-            padding-left: 10px;
-            font-size: 32px;
-            margin-bottom: 20px;
+        .btn-isekai {
+            background: #ff2fb2;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(255, 47, 178, 0.4);
+        }
+        .btn-isekai:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 47, 178, 0.8);
         }
 
-        .card {
-            background: rgba(20,20,30,0.8);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .chibi {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 50px;
+            z-index: 100;
+            animation: floatChibi 3s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes floatChibi {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- PARTÍCULAS Y FLOTANTES -->
+    <!-- MAGICAL EFFECTS -->
     <div class="particulas"></div>
     <div class="flotante-izquierda"></div>
     <div class="flotante-derecha"></div>
+    <div class="chibi" title="Kumusta, Mannalon ti Isekai!">🧙‍♂️</div>
 
-    <!-- ===== PORTADA BIENVENIDA ===== -->
-    <section class="portada bienvenida">
-        <h1>BIENVENIDA AL MUNDO ISEKAI</h1>
-        <p>Has cruzado el portal. Las guardianas te estaban esperando.</p>
-    </section>
-
-    <!-- ===== PORTAL CANAL ===== -->
-    <section class="portada" id="canal">
-        <h1>MI CANAL</h1>
-        <p>Anime, gaming y contenido épico todos los días.</p>
-    </section>
-
-    <article>
-        <h2>Noticias del Canal</h2>
-        <div class="card">
-            <h3>Nueva serie isekai rompe récords</h3>
-            <p>El mundo mágico está más vivo que nunca.</p>
+    <!-- CABECERA -->
+    <header class="sticky top-0 z-50 bg-black/80 border-b border-primary/30 px-6 py-4 flex justify-between items-center backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <strong class="text-2xl font-black text-white italic tracking-tighter">OTAKU <span class="text-primary">24/7</span></strong>
         </div>
-        <div class="card">
-            <h3>Evento especial del canal</h3>
-            <p>Momentos épicos, risas y caos asegurado.</p>
+        <nav class="hidden lg:flex gap-8 uppercase text-xs font-bold tracking-widest">
+            <a href="#canal" class="text-primary hover:text-white transition-colors">Kanal</a>
+            <a href="#isekai" class="text-primary hover:text-white transition-colors">Isekai</a>
+            <a href="#guias" class="text-primary hover:text-white transition-colors">Gidya</a>
+            <a href="#apoyo" class="text-primary hover:text-white transition-colors">Tulong</a>
+            <a href="#zona" class="text-primary hover:text-white transition-colors">Zona X</a>
+        </nav>
+        <div class="lg:hidden text-primary text-2xl"><i class="fa-solid fa-wand-sparkles"></i></div>
+    </header>
+
+    <!-- PORTADA: BIENVENIDA -->
+    <section class="portada">
+        <h1>SANGAYO TI LUBONG TI ISEKAI</h1>
+        <p>Binaliwam ti portal. Dagiti agbantay ket agur-uray kenka.</p>
+        <div class="mt-8 flex justify-center gap-4">
+            <a href="#canal" class="btn-isekai">LUCTAN TI PORTAL</a>
+        </div>
+    </section>
+
+    <!-- KANAL SECTION -->
+    <section id="canal" class="portada">
+        <h1 class="text-magic">TI KANALKO</h1>
+        <p>Anime, ay-ayam, ken epiko a lualo iti inaldaw-aldaw.</p>
+    </section>
+
+    <article class="max-w-5xl mx-auto my-12 p-10 rounded-3xl">
+        <h2 class="text-3xl font-black border-l-4 border-primary pl-4 mb-8 uppercase italic">Damdamag ti Kanal</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-6 rounded-2xl border border-primary/20">
+                <h3 class="text-xl font-bold text-primary mb-2">Baro a serye ti Isekai</h3>
+                <p class="text-gray-300">Ti nasipnget a lubong ket sibibiag ngem iti napalabas.</p>
+            </div>
+            <div class="bg-card p-6 rounded-2xl border border-primary/20">
+                <h3 class="text-xl font-bold text-primary mb-2">Espesyal nga Pasamak</h3>
+                <p class="text-gray-300">Epiko a kanito, katawa, ken gulo a masiguro.</p>
+            </div>
         </div>
     </article>
 
-    <!-- ===== PORTAL ISEKAI ===== -->
-    <section class="portada" id="isekai">
-        <h1>PORTAL ISEKAI</h1>
-        <p>Explora mundos mágicos, vota tus animes favoritos y descubre dónde verlos.</p>
+    <!-- PORTAL ISEKAI -->
+    <section id="isekai" class="portada">
+        <h1>PORTAL TI ISEKAI</h1>
+        <p>Sukisoken dagiti mistiko a lubong, agbotos kadagiti paboritom, ken kitaen no sadino ti pabuya.</p>
     </section>
 
-    <article>
-        <h2>Animes Isekai</h2>
-        <div class="card">
-            <h3>Re:Zero</h3>
-            <p>Disponible en: Crunchyroll</p>
-        </div>
-        <div class="card">
-            <h3>Konosuba</h3>
-            <p>Disponible en: Netflix</p>
-        </div>
-        <div class="card">
-            <h3>Tensei Slime</h3>
-            <p>Disponible en: Crunchyroll</p>
+    <article class="max-w-5xl mx-auto my-12 p-10 rounded-3xl">
+        <h2 class="text-3xl font-black border-l-4 border-primary pl-4 mb-8 uppercase italic">Dagiti Anime nga Isekai</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-card p-4 rounded-xl text-center border border-white/10 hover:border-primary/50 transition-all">
+                <div class="h-40 bg-gray-800 rounded-lg mb-4 flex items-center justify-center italic text-gray-500">[Ladawan ti Re:Zero]</div>
+                <h3 class="font-bold text-lg mb-1">Re:Zero</h3>
+                <p class="text-sm text-primary italic">Masarakan iti: Crunchyroll</p>
+            </div>
+            <div class="bg-card p-4 rounded-xl text-center border border-white/10 hover:border-primary/50 transition-all">
+                <div class="h-40 bg-gray-800 rounded-lg mb-4 flex items-center justify-center italic text-gray-500">[Ladawan ti Konosuba]</div>
+                <h3 class="font-bold text-lg mb-1">Konosuba</h3>
+                <p class="text-sm text-primary italic">Masarakan iti: Netflix</p>
+            </div>
+            <div class="bg-card p-4 rounded-xl text-center border border-white/10 hover:border-primary/50 transition-all">
+                <div class="h-40 bg-gray-800 rounded-lg mb-4 flex items-center justify-center italic text-gray-500">[Ladawan ti Tensei Slime]</div>
+                <h3 class="font-bold text-lg mb-1">Tensei Slime</h3>
+                <p class="text-sm text-primary italic">Masarakan iti: Crunchyroll</p>
+            </div>
         </div>
     </article>
 
-    <!-- ===== PORTAL GUÍAS ===== -->
-    <section class="portada" id="guias">
-        <h1>GUÍAS Y TRUCOS</h1>
-        <p>Consejos, builds y estrategias para tus juegos favoritos.</p>
+    <!-- GIDYA KEN TRUKOS -->
+    <section id="guias" class="portada">
+        <h1 class="text-yellow-400">GIDYA KEN TRUKOS</h1>
+        <p>Bagbaga, builds, ken estratehia para kadagiti paborito nga ay-ayammo.</p>
     </section>
 
-    <article>
-        <h2>Guías y Consejos</h2>
-        <div class="card">
-            <h3>Genshin Impact – Progresar rápido</h3>
-            <p>Ruta diaria, artefactos y equipo recomendado.</p>
-        </div>
-        <div class="card">
-            <h3>Honkai: Star Rail – Equipos meta</h3>
-            <p>Composiciones fuertes para el endgame.</p>
+    <article class="max-w-5xl mx-auto my-12 p-10 rounded-3xl">
+        <h2 class="text-3xl font-black border-l-4 border-yellow-400 pl-4 mb-8 uppercase italic">Gidya ken Bagbaga</h2>
+        <div class="space-y-4">
+            <div class="bg-card p-6 rounded-xl border-l-4 border-yellow-400">
+                <h3 class="font-bold text-xl">Genshin Impact – Napardas nga Panagrang-ay</h3>
+                <p class="text-gray-400">Dalan iti inaldaw, artepaktos, ken ramit a mairekomendar.</p>
+            </div>
+            <div class="bg-card p-6 rounded-xl border-l-4 border-yellow-400">
+                <h3 class="font-bold text-xl">Honkai: Star Rail – Meta a Tim</h3>
+                <p class="text-gray-400">Nabileg a lualo para iti endgame.</p>
+            </div>
         </div>
     </article>
 
-    <!-- ===== PORTAL APOYO ===== -->
-    <section class="portada" id="apoyo">
-        <h1>APOYA EL PROYECTO</h1>
-        <p>Ayuda a mantener Otaku 24/7 activo y sin anuncios.</p>
+    <!-- TULONG -->
+    <section id="apoyo" class="portada">
+        <h1>TULONGAN TI PROYEKTO</h1>
+        <p>Tulong tapno mapataltalinaed ti Otaku 24/7 nga aktibo ken awan ads-na.</p>
     </section>
 
-    <article>
-        <h2>Donaciones y Afiliaciones</h2>
-        <div class="card">
-            <p>Elige tu forma de apoyar:</p>
-            <button>PayPal</button>
-            <button>Ko‑fi</button>
-            <button>Patreon</button>
-            <button>Amazon Afiliados</button>
+    <article class="max-w-3xl mx-auto my-12 p-10 rounded-3xl text-center">
+        <h2 class="text-2xl font-bold mb-6 italic text-primary">Pilian ti wagas ti panagtulong:</h2>
+        <div class="flex flex-wrap justify-center gap-4">
+            <button class="btn-isekai bg-blue-700">PayPal</button>
+            <button class="btn-isekai bg-red-500">Ko-fi</button>
+            <button class="btn-isekai bg-orange-600">Patreon</button>
+            <button class="btn-isekai bg-yellow-600">Amazon</button>
         </div>
     </article>
 
-    <!-- ===== PORTAL ZONA RESTRINGIDA ===== -->
-    <section class="portada" id="zona">
-        <h1>ZONA RESTRINGIDA</h1>
-        <p>Advertencia: contenido bloqueado.</p>
+    <!-- ZONA RESTRINGIDA -->
+    <section id="zona" class="portada">
+        <h1 class="text-red-600">ZONA RESTRINGIDA</h1>
+        <p class="text-red-400 font-bold uppercase tracking-widest italic animate-pulse">Binaliwam: Nakandado ti lualo.</p>
     </section>
 
-    <article>
-        <h2>Acceso Denegado</h2>
-        <div class="card" style="border:2px solid red;">
-            <h3>Zona en mantenimiento</h3>
-            <p>Este portal está bloqueado temporalmente.</p>
-        </div>
+    <article class="max-w-5xl mx-auto my-12 p-12 rounded-3xl border-2 border-red-600 bg-red-900/20 text-center">
+        <div class="text-7xl mb-6 text-red-600"><i class="fa-solid fa-lock"></i></div>
+        <h2 class="text-4xl font-black text-red-600 uppercase mb-4 tracking-tighter">NAIPARIT TI SUMREK</h2>
+        <p class="text-lg text-white font-bold italic">Daytoy a portal ket nakandado laengen gapu ti panagtarimaan.</p>
     </article>
+
+    <footer class="py-12 text-center text-gray-500 border-t border-white/10 mt-20">
+        <p class="italic">Lubong ti Isekai – Otaku 24/7 &copy; 2024</p>
+        <p class="text-[10px] uppercase tracking-widest mt-2">Daytoy nga impormasyon ket klasipikado</p>
+    </footer>
 
 </body>
 </html>
