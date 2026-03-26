@@ -7,41 +7,90 @@
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             background: #0a0a0f;
             color: white;
         }
 
+        /* NAVBAR */
         header {
             background: #111;
-            padding: 15px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
+            z-index: 10;
         }
 
         nav a {
-            margin: 0 10px;
+            margin: 0 12px;
             color: #ff2fb2;
             text-decoration: none;
             font-weight: bold;
+            font-size: 16px;
         }
 
+        /* HERO PORTADA */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 40px;
+            background: linear-gradient(to right, #0a0a0f, #1a1a22);
+            margin-bottom: 60px;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .btn {
+            background: #ff2fb2;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero img {
+            width: 420px;
+            border-radius: 10px;
+        }
+
+        /* SECCIONES */
         section {
-            padding: 40px 20px;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            background: #111;
+            border-radius: 12px;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         h2 {
             border-left: 4px solid #ff2fb2;
             padding-left: 10px;
-        }
-
-        .card {
-            background: #1a1a22;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 30px;
+            font-weight: 700;
         }
 
         .grid {
@@ -54,14 +103,24 @@
             .grid-3 { grid-template-columns: repeat(3, 1fr); }
         }
 
+        .card {
+            background: #1a1a22;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        /* ZONA RESTRINGIDA */
         .crime-box {
             background: #220000;
             border: 2px solid red;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             text-align: center;
+            font-size: 20px;
         }
 
+        /* CHIBI */
         .chibi {
             position: fixed;
             bottom: 20px;
@@ -80,7 +139,7 @@
 <body>
 
 <header>
-    <div><strong>Otaku 24/7</strong></div>
+    <div><strong style="font-size:22px;">Otaku 24/7</strong></div>
     <nav>
         <a href="#portal">Portal</a>
         <a href="#noticias">Noticias</a>
@@ -93,64 +152,76 @@
 
 <div class="chibi">🧙‍♂️</div>
 
-<section id="portal">
-    <h2>🌌 Portal Isekai</h2>
-    <p>Has sido invocado a otro mundo…</p>
+<!-- PORTADA -->
+<section class="hero" id="portal">
+    <div class="hero-text">
+        <h1>BIENVENIDO A OTAKU 24/7</h1>
+        <p>Tu plataforma definitiva para Anime, Gaming y Terror.  
+        Transmitiendo contenido premium las 24 horas.</p>
+        <button class="btn">Ver Ahora</button>
+    </div>
+
+    <img src="https://i.imgur.com/4ZQZ4Zy.png" alt="Personaje anime">
 </section>
 
+<!-- NOTICIAS -->
 <section id="noticias">
     <h2>📰 Noticias Anime</h2>
 
     <div class="grid grid-2">
         <div class="card">
-            <h3>Nuevo anime isekai rompe récords</h3>
+            <h3 style="font-size:22px;">Nuevo anime isekai rompe récords</h3>
             <p>Un héroe invocado está arrasando en Japón.</p>
         </div>
 
         <div class="card">
-            <h3>Momentos épicos del canal</h3>
+            <h3 style="font-size:22px;">Momentos épicos del canal</h3>
             <p>Fails, risas y momentos random.</p>
         </div>
     </div>
 </section>
 
+<!-- ISEKAI -->
 <section id="isekai">
     <h2>🌠 Portal Isekai</h2>
 
     <div class="grid grid-3">
-        <div class="card"><h3>Re:Zero</h3></div>
-        <div class="card"><h3>Konosuba</h3></div>
-        <div class="card"><h3>Tensei Slime</h3></div>
+        <div class="card"><h3 style="font-size:22px;">Re:Zero</h3></div>
+        <div class="card"><h3 style="font-size:22px;">Konosuba</h3></div>
+        <div class="card"><h3 style="font-size:22px;">Tensei Slime</h3></div>
     </div>
 </section>
 
+<!-- GUIAS -->
 <section id="guias">
     <h2>🎮 Guías y Trucos</h2>
 
     <div class="grid grid-2">
-        <div class="card"><h3>Guía Genshin Impact</h3></div>
-        <div class="card"><h3>Equipos Meta HSR</h3></div>
+        <div class="card"><h3 style="font-size:22px;">Guía Genshin Impact</h3></div>
+        <div class="card"><h3 style="font-size:22px;">Equipos Meta HSR</h3></div>
     </div>
 </section>
 
+<!-- APOYO -->
 <section id="apoyo">
     <h2>💰 Apoya el Proyecto</h2>
 
     <div class="card">
         <p>Ayuda a mantener Otaku 24/7</p>
-        <button>PayPal</button>
-        <button>Ko‑fi</button>
-        <button>Patreon</button>
+        <button class="btn">PayPal</button>
+        <button class="btn">Ko‑fi</button>
+        <button class="btn">Patreon</button>
     </div>
 </section>
 
+<!-- ZONA X -->
 <section id="zona">
     <h2>🟥 Zona Restringida</h2>
 
     <div class="crime-box">
-        <h3>Acceso no autorizado</h3>
+        <h3 style="font-size:26px;">Acceso no autorizado</h3>
         <p>Este portal está bloqueado temporalmente.</p>
-        <div style="font-size: 40px;">🔒</div>
+        <div style="font-size: 50px;">🔒</div>
     </div>
 </section>
 
