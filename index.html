@@ -2,288 +2,331 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Otaku 24/7</title>
+    <!-- Tailwind CSS y Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff2fb2',
+                        dark: '#0a0a0f',
+                        darker: '#111111',
+                        card: '#1a1a22'
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background: #0a0a0f;
-            color: white;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
+        
+        body { 
+            background-color: #0a0a0f; 
+            color: white; 
+            font-family: 'Poppins', sans-serif; 
+            scroll-behavior: smooth;
         }
 
-        header {
-            background: #111;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        nav a {
-            margin: 0 12px;
-            color: #ff2fb2;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* PORTADAS */
+        /* PORTADAS DINÁMICAS */
         .portada {
-            padding: 100px 40px;
+            padding: 120px 20px;
             text-align: center;
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             border-bottom: 4px solid #ff2fb2;
-        }
-
-        .portada h1 {
-            font-size: 60px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #ff2fb2;
-        }
-
-        .portada p {
-            font-size: 22px;
-            max-width: 700px;
-            margin: auto;
-            color: #ddd;
-        }
-
-        .btn {
-            background: #ff2fb2;
-            padding: 14px 28px;
-            border-radius: 8px;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 25px;
-        }
-
-        /* ARTÍCULOS */
-        article {
-            background: #111;
-            padding: 50px 30px;
-            margin: 40px auto;
-            width: 90%;
-            border-radius: 12px;
-        }
-
-        article h2 {
-            border-left: 4px solid #ff2fb2;
-            padding-left: 10px;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            background: #1a1a22;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        /* ISEKAI IMÁGENES */
-        .isekai-grid {
-            display: grid;
-            gap: 20px;
-        }
-
-        @media(min-width: 800px) {
-            .isekai-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .isekai-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .isekai-card button {
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        /* ZONA RESTRINGIDA */
-        .crime {
-            background: #220000;
-            border: 3px solid red;
-            padding: 30px;
-            text-align: center;
-            border-radius: 12px;
             position: relative;
         }
 
-        .crime img {
-            width: 100%;
-            border-radius: 10px;
-            opacity: 0.8;
+        .portada::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.8) 100%);
+            z-index: 1;
+        }
+
+        .portada-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .portada h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 47, 178, 0.8);
+            letter-spacing: -2px;
+        }
+
+        /* BOTONES */
+        .btn {
+            background: #ff2fb2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 47, 178, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* ZONA CRIMINAL */
+        .crime {
+            background: #220000;
+            border: 3px solid #ff0000;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
         .cinta {
             position: absolute;
-            top: 20px;
-            left: -20px;
+            top: 40px;
+            left: -50px;
             transform: rotate(-15deg);
-            background: yellow;
+            background: #facc15;
             color: black;
-            padding: 10px 40px;
-            font-weight: bold;
-            font-size: 20px;
-            border: 2px solid black;
+            padding: 12px 80px;
+            font-weight: 900;
+            font-size: 22px;
+            border: 3px solid black;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            white-space: nowrap;
         }
 
         .chibi {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            font-size: 40px;
+            bottom: 25px;
+            left: 25px;
+            font-size: 45px;
+            z-index: 100;
             animation: flotar 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
 
         @keyframes flotar {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        /* Animación para las Cards */
+        .card-anime:hover img {
+            transform: scale(1.05);
         }
     </style>
 </head>
+<body class="selection:bg-primary selection:text-white">
 
-<body>
-
-<header>
-    <div><strong style="font-size:22px;">Otaku 24/7</strong></div>
-    <nav>
-        <a href="#canal">Canal</a>
-        <a href="#isekai">Isekai</a>
-        <a href="#guias">Guías</a>
-        <a href="#apoyo">Apoyo</a>
-        <a href="#zona">Zona X</a>
-    </nav>
-</header>
-
-<div class="chibi">🧙‍♂️</div>
-
-<!-- PORTADA 1: TU CANAL -->
-<section class="portada" id="canal" style="background-image:url('https://i.imgur.com/4ZQZ4Zy.png');">
-    <h1>MI CANAL</h1>
-    <p>Bienvenido a Otaku 24/7. Anime, gaming y contenido épico todos los días.</p>
-    <button class="btn">Entrar al Canal</button>
-</section>
-
-<!-- NOTICIAS -->
-<article>
-    <h2>📰 Noticias</h2>
-
-    <div class="card">
-        <h3>Nuevo anime isekai rompe récords</h3>
-        <p>El anime más visto del mes en Japón.</p>
-    </div>
-
-    <div class="card">
-        <h3>Evento especial del canal</h3>
-        <p>Clips, risas y momentos épicos.</p>
-    </div>
-</article>
-
-<!-- PORTADA 2: ISEKAI -->
-<section class="portada" id="isekai" style="background-image:url('https://i.imgur.com/8gk8V0W.jpeg');">
-    <h1>PORTAL ISEKAI</h1>
-    <p>Explora mundos mágicos, vota tus animes favoritos y descubre dónde verlos.</p>
-</section>
-
-<article>
-    <h2>🌠 Animes Isekai</h2>
-
-    <div class="isekai-grid">
-
-        <div class="isekai-card card">
-            <img src="https://i.imgur.com/1Q9Z1ZB.jpeg">
-            <h3>Re:Zero</h3>
-            <button class="btn">Votar</button>
-            <p>Disponible en: Crunchyroll</p>
+    <!-- CABECERA -->
+    <header class="sticky top-0 z-50 bg-darker/95 border-b border-gray-800 px-6 py-4 flex justify-between items-center backdrop-blur-md">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+            <strong class="text-2xl font-black text-white italic tracking-tighter">OTAKU <span class="text-primary">24/7</span></strong>
         </div>
+        <nav class="hidden lg:flex gap-8 uppercase text-xs font-bold tracking-widest">
+            <a href="#canal" class="text-primary hover:text-white transition-colors">Canal</a>
+            <a href="#isekai" class="text-primary hover:text-white transition-colors">Isekai</a>
+            <a href="#guias" class="text-primary hover:text-white transition-colors">Guías</a>
+            <a href="#apoyo" class="text-primary hover:text-white transition-colors">Apoyo</a>
+            <a href="#zona" class="text-primary hover:text-white transition-colors">Zona X</a>
+        </nav>
+        <div class="lg:hidden text-primary text-2xl"><i class="fa-solid fa-bars"></i></div>
+    </header>
 
-        <div class="isekai-card card">
-            <img src="https://i.imgur.com/5z0T0Qw.jpeg">
-            <h3>Konosuba</h3>
-            <button class="btn">Votar</button>
-            <p>Disponible en: Netflix</p>
+    <div class="chibi">🧙‍♂️</div>
+
+    <!-- PORTADA 1: CANAL -->
+    <section class="portada" id="canal" style="background-image:url('https://i.imgur.com/4ZQZ4Zy.png');">
+        <div class="portada-content">
+            <h1 class="uppercase">Mi Canal</h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto mb-8 font-light">
+                Anime, gaming y contenido épico todos los días. La comunidad más activa.
+            </p>
+            <button class="btn text-xl px-10 py-4">Entrar al Canal <i class="fa-brands fa-youtube ml-2"></i></button>
         </div>
+    </section>
 
-        <div class="isekai-card card">
-            <img src="https://i.imgur.com/3z8Yg0M.jpeg">
-            <h3>Tensei Slime</h3>
-            <button class="btn">Votar</button>
-            <p>Disponible en: Crunchyroll</p>
+    <!-- NOTICIAS -->
+    <article class="max-w-6xl mx-auto py-16 px-6">
+        <h2 class="text-4xl font-black border-l-8 border-primary pl-4 mb-10 italic uppercase tracking-tighter">
+            <i class="fa-solid fa-newspaper mr-3 text-primary"></i> Últimas Noticias
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-card p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-all group cursor-pointer">
+                <span class="text-primary font-bold text-sm block mb-2">TENDENCIA</span>
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">Nuevo anime isekai rompe récords</h3>
+                <p class="text-gray-400">El estreno de esta semana ha superado todas las expectativas en Japón y Latinoamérica.</p>
+            </div>
+            <div class="bg-card p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-all group cursor-pointer">
+                <span class="text-primary font-bold text-sm block mb-2">COMUNIDAD</span>
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">Evento especial del canal</h3>
+                <p class="text-gray-400">Prepárate para el directo de mañana: clips, risas y sorteos para suscriptores.</p>
+            </div>
         </div>
+    </article>
 
-    </div>
-</article>
+    <!-- PORTADA 2: ISEKAI -->
+    <section class="portada" id="isekai" style="background-image:url('https://i.imgur.com/8gk8V0W.jpeg');">
+        <div class="portada-content">
+            <h1 class="uppercase">Portal Isekai</h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto mb-4 font-light">
+                Explora mundos mágicos y descubre tu próxima aventura.
+            </p>
+        </div>
+    </section>
 
-<!-- PORTADA 3: GUÍAS, TRUCOS Y CONSEJOS -->
-<section class="portada" id="guias" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
-    <h1>GUÍAS Y TRUCOS</h1>
-    <p>Consejos, builds y estrategias para tus juegos favoritos.</p>
-</section>
+    <article class="max-w-6xl mx-auto py-16 px-6">
+        <h2 class="text-4xl font-black border-l-8 border-primary pl-4 mb-10 italic uppercase tracking-tighter">
+            <i class="fa-solid fa-wand-magic-sparkles mr-3 text-primary"></i> Animes Recomendados
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Re:Zero -->
+            <div class="bg-card rounded-2xl overflow-hidden border border-gray-800 card-anime group">
+                <div class="overflow-hidden h-64">
+                    <img src="https://i.imgur.com/1Q9Z1ZB.jpeg" class="w-full h-full object-cover transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-black mb-1 italic">Re:Zero</h3>
+                    <p class="text-primary text-sm font-bold mb-4"><i class="fa-solid fa-tv mr-1"></i> Crunchyroll</p>
+                    <button class="btn w-full">VOTAR <i class="fa-solid fa-heart ml-1"></i></button>
+                </div>
+            </div>
+            <!-- Konosuba -->
+            <div class="bg-card rounded-2xl overflow-hidden border border-gray-800 card-anime group">
+                <div class="overflow-hidden h-64">
+                    <img src="https://i.imgur.com/5z0T0Qw.jpeg" class="w-full h-full object-cover transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-black mb-1 italic">Konosuba</h3>
+                    <p class="text-primary text-sm font-bold mb-4"><i class="fa-solid fa-tv mr-1"></i> Netflix</p>
+                    <button class="btn w-full">VOTAR <i class="fa-solid fa-heart ml-1"></i></button>
+                </div>
+            </div>
+            <!-- Slime -->
+            <div class="bg-card rounded-2xl overflow-hidden border border-gray-800 card-anime group">
+                <div class="overflow-hidden h-64">
+                    <img src="https://i.imgur.com/3z8Yg0M.jpeg" class="w-full h-full object-cover transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-black mb-1 italic">Tensei Slime</h3>
+                    <p class="text-primary text-sm font-bold mb-4"><i class="fa-solid fa-tv mr-1"></i> Crunchyroll</p>
+                    <button class="btn w-full">VOTAR <i class="fa-solid fa-heart ml-1"></i></button>
+                </div>
+            </div>
+        </div>
+    </article>
 
-<article>
-    <h2>🎮 Guías, Trucos y Consejos</h2>
+    <!-- PORTADA 3: GUÍAS -->
+    <section class="portada" id="guias" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
+        <div class="portada-content">
+            <h1 class="uppercase">Guías y Trucos</h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-light">
+                Domina tus juegos favoritos con nuestras estrategias avanzadas.
+            </p>
+        </div>
+    </section>
 
-    <div class="card">
-        <h3>Genshin Impact – Progresar rápido sin gastar</h3>
-        <p>Ruta diaria, resina, artefactos y equipo recomendado para avanzar sin perder tiempo.</p>
-    </div>
+    <article class="max-w-6xl mx-auto py-16 px-6">
+        <h2 class="text-4xl font-black border-l-8 border-primary pl-4 mb-10 italic uppercase tracking-tighter">
+            <i class="fa-solid fa-gamepad mr-3 text-primary"></i> Gaming Pro
+        </h2>
+        <div class="space-y-6">
+            <div class="bg-card p-6 rounded-xl border-l-4 border-primary flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold">Genshin Impact – Progresar rápido</h3>
+                    <p class="text-gray-400">Optimiza tu resina y mejora tus artefactos en tiempo récord.</p>
+                </div>
+                <button class="btn py-2 text-sm">Ver Guía</button>
+            </div>
+            <div class="bg-card p-6 rounded-xl border-l-4 border-primary flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold">Honkai: Star Rail – Equipos Meta</h3>
+                    <p class="text-gray-400">Las mejores composiciones para superar el Universo Simulado.</p>
+                </div>
+                <button class="btn py-2 text-sm">Ver Guía</button>
+            </div>
+            <div class="bg-card p-6 rounded-xl border-l-4 border-gray-600 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-300">Consejos de Rendimiento</h3>
+                    <p class="text-gray-500">Configuración técnica para ganar FPS en cualquier juego.</p>
+                </div>
+                <button class="btn py-2 text-sm bg-gray-700">Próximamente</button>
+            </div>
+        </div>
+    </article>
 
-    <div class="card">
-        <h3>Honkai: Star Rail – Equipos meta</h3>
-        <p>Composiciones fuertes para jefes, memoria del caos y contenido endgame.</p>
-    </div>
+    <!-- PORTADA 4: APOYO -->
+    <section class="portada" id="apoyo" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
+        <div class="portada-content">
+            <h1 class="uppercase">Apoya el Proyecto</h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-light">
+                Tu ayuda hace que sigamos creciendo. ¡Únete a la legión!
+            </p>
+        </div>
+    </section>
 
-    <div class="card">
-        <h3>Consejos generales</h3>
-        <p>Ajustes gráficos, control, configuración de mando y trucos para mejorar tu rendimiento.</p>
-    </div>
-</article>
+    <article class="max-w-4xl mx-auto py-16 px-6 text-center">
+        <div class="bg-darker p-10 rounded-3xl border-2 border-primary/20 shadow-2xl">
+            <h2 class="text-3xl font-black mb-6">MÉTODOS DE CONTRIBUCIÓN</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="bg-[#003087] hover:scale-105 transition-transform p-4 rounded-xl font-bold"><i class="fa-brands fa-paypal mb-2 text-2xl block"></i> PayPal</button>
+                <button class="bg-[#ff5e5b] hover:scale-105 transition-transform p-4 rounded-xl font-bold"><i class="fa-solid fa-mug-hot mb-2 text-2xl block"></i> Ko-fi</button>
+                <button class="bg-[#f96854] hover:scale-105 transition-transform p-4 rounded-xl font-bold"><i class="fa-brands fa-patreon mb-2 text-2xl block"></i> Patreon</button>
+                <button class="bg-[#ff9900] hover:scale-105 transition-transform p-4 rounded-xl font-bold text-black"><i class="fa-brands fa-amazon mb-2 text-2xl block"></i> Amazon</button>
+            </div>
+        </div>
+    </article>
 
-<!-- PORTADA 4: APOYO -->
-<section class="portada" id="apoyo" style="background-image:url('https://i.imgur.com/7p3Qm8p.jpeg');">
-    <h1>APOYA EL PROYECTO</h1>
-    <p>Ayuda a mantener Otaku 24/7 activo y sin anuncios.</p>
-</section>
+    <!-- PORTADA 5: ZONA RESTRINGIDA -->
+    <section class="portada" id="zona" style="background-image:url('https://i.imgur.com/9u2Jk0N.jpeg');">
+        <div class="portada-content">
+            <h1 class="text-red-500">ZONA RESTRINGIDA</h1>
+            <p class="text-xl text-red-200 font-bold uppercase tracking-widest">Contenido Clasificado</p>
+        </div>
+    </section>
 
-<article>
-    <h2>💰 Donaciones y Afiliaciones</h2>
+    <article class="max-w-5xl mx-auto py-20 px-6 mb-20">
+        <div class="crime">
+            <div class="cinta">CRIME SCENE - DO NOT CROSS</div>
+            <div class="relative group cursor-not-allowed">
+                <img src="https://i.imgur.com/9u2Jk0N.jpeg" class="w-full h-80 object-cover rounded-xl opacity-30 grayscale filter blur-[2px]">
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-lock text-7xl text-red-600 mb-4 drop-shadow-lg"></i>
+                    <h3 class="text-3xl font-black text-white uppercase italic">Acceso Denegado</h3>
+                    <p class="bg-red-600 text-white px-4 py-1 mt-2 font-bold text-sm">PROTOCOLO DE SEGURIDAD ACTIVADO</p>
+                </div>
+            </div>
+            <p class="text-gray-500 mt-8 italic text-sm">Este portal ha sido sellado temporalmente por infracción de las leyes interdimensionales.</p>
+        </div>
+    </article>
 
-    <div class="card">
-        <button class="btn">PayPal</button>
-        <button class="btn">Ko‑fi</button>
-        <button class="btn">Patreon</button>
-        <button class="btn">Amazon Afiliados</button>
-    </div>
-</article>
-
-<!-- PORTADA 5: ZONA RESTRINGIDA -->
-<section class="portada" id="zona" style="background-image:url('https://i.imgur.com/9u2Jk0N.jpeg');">
-    <h1>ZONA RESTRINGIDA</h1>
-    <p>Advertencia: contenido bloqueado.</p>
-</section>
-
-<article>
-    <h2>🟥 Acceso Denegado</h2>
-
-    <div class="crime">
-        <div class="cinta">CRIME SCENE</div>
-        <img src="https://i.imgur.com/9u2Jk0N.jpeg">
-        <h3>Acceso no autorizado</h3>
-        <p>Este portal está bloqueado temporalmente.</p>
-    </div>
-</article>
+    <footer class="bg-black py-16 border-t border-gray-900 text-center text-gray-600">
+        <div class="mb-6">
+            <strong class="text-white text-2xl italic tracking-tighter">OTAKU <span class="text-primary">24/7</span></strong>
+        </div>
+        <div class="flex justify-center gap-6 mb-8 text-xl">
+            <i class="fa-brands fa-twitter hover:text-primary cursor-pointer"></i>
+            <i class="fa-brands fa-discord hover:text-primary cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-primary cursor-pointer"></i>
+            <i class="fa-brands fa-tiktok hover:text-primary cursor-pointer"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[0.4em] opacity-50">Conexión Encriptada • All Rights Reserved 2024</p>
+    </footer>
 
 </body>
 </html>
