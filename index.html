@@ -1,245 +1,361 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Otaku 24/7 – Mundo Isekai Oscuro</title>
+import React, { useState, useEffect } from 'react';
+import { 
+  Home, Tv, Gamepad2, Ghost, Newspaper, 
+  Video, Heart, Search, Bell, Menu, X, 
+  Wand2, Upload, PlayCircle, Star, LogOut, User, Settings
+} from 'lucide-react';
 
-    <style>
-        /* ===== FONDO SIMPLE LOCAL ===== */
-        body {
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background: url('imagenes/fondo.png') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-        }
+// --- CONFIGURACIÓN DE SECCIONES ---
+const TABS = [
+  { id: 'home', label: 'Inicio', icon: Home },
+  { id: 'anime', label: 'Anime', icon: Tv },
+  { id: 'gaming', label: 'Gaming', icon: Gamepad2 },
+  { id: 'terror', label: 'Terror', icon: Ghost },
+  { id: 'noticias', label: 'Noticias', icon: Newspaper },
+  { id: 'creadores', label: 'Creadores', icon: Video },
+  { id: 'donaciones', label: 'Apoyar', icon: Heart }
+];
 
-        /* ===== PARTÍCULAS MÁGICAS ===== */
-        .particulas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: url('imagenes/fondo.png');
-            opacity: 0.10;
-            animation: particulasMove 18s infinite linear;
-            z-index: 1;
-        }
+// --- DATOS DE EJEMPLO (MOCKS) ---
+const MOCK_CONTENT = {
+  anime: [
+    { title: "Neon Genesis Remastered", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=600", tag: "Estreno" },
+    { title: "Cyberpunk: Edgerunners II", img: "https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?auto=format&fit=crop&q=80&w=600", tag: "Tendencia" },
+    { title: "Samurai Souls", img: "https://images.unsplash.com/photo-1612487528505-d2338264c821?auto=format&fit=crop&q=80&w=600", tag: "Exclusivo" },
+    { title: "Mecha Vanguard", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=600", tag: "Nuevo" }
+  ],
+  gaming: [
+    { title: "E-Sports Final 2026", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600", tag: "En Vivo" },
+    { title: "RPG Retro Review", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=600", tag: "Reseña" },
+    { title: "Speedrun Mundial", img: "https://images.unsplash.com/photo-1538481199005-ca5237cd331e?auto=format&fit=crop&q=80&w=600", tag: "Comunidad" },
+    { title: "Setup Gamer Definitivo", img: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&q=80&w=600", tag: "Hardware" }
+  ],
+  terror: [
+    { title: "Historias de la Niebla", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?auto=format&fit=crop&q=80&w=600", tag: "Sobrenatural" },
+    { title: "El Bosque Maldito", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=600", tag: "Horror" },
+    { title: "Sombras del Callejón", img: "https://images.unsplash.com/photo-1629845084926-282672b1572c?auto=format&fit=crop&q=80&w=600", tag: "Thriller" },
+    { title: "Pesadillas Digitales", img: "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&q=80&w=600", tag: "Creepypasta" }
+  ]
+};
 
-        @keyframes particulasMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-300px); }
-        }
+export default function App() {
+  const [currentTab, setCurrentTab] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado de sesión
+  const [user, setUser] = useState({ name: 'Morgana', tag: '22143', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Morgana' });
 
-        /* ===== CHICAS FLOTANTES ===== */
-        .chica-izquierda,
-        .chica-derecha {
-            position: fixed;
-            top: 20%;
-            width: 220px;
-            height: auto;
-            animation: flotarChica 6s infinite ease-in-out;
-            pointer-events: none;
-            z-index: 4;
-        }
+  const [animeNews, setAnimeNews] = useState([]);
+  const [isLoadingNews, setIsLoadingNews] = useState(false);
 
-        .chica-izquierda { left: 1%; }
-        .chica-derecha { right: 1%; }
+  // Estados para el panel de creadores
+  const [videoTitle, setVideoTitle] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedPrompt, setGeneratedPrompt] = useState('');
 
-        @keyframes flotarChica {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
-        }
+  useEffect(() => {
+    if (currentTab === 'noticias' && animeNews.length === 0) {
+      cargarNoticias();
+    }
+  }, [currentTab]);
 
-        /* ===== PORTADAS ===== */
-        .portada {
-            padding: 140px 40px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
+  const cargarNoticias = async () => {
+    setIsLoadingNews(true);
+    try {
+      const res = await fetch('https://api.jikan.moe/v4/anime?limit=8&order_by=popularity');
+      const data = await res.json();
+      setAnimeNews(data.data || []);
+    } catch (error) {
+      console.error("Error cargando noticias:", error);
+    } finally {
+      setIsLoadingNews(false);
+    }
+  };
 
-        .portada h1 {
-            font-size: 70px;
-            font-weight: 900;
-            text-shadow: 0 0 25px #ff2fb2;
-        }
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setIsUserMenuOpen(false);
+    setCurrentTab('home');
+  };
 
-        .portada p {
-            font-size: 24px;
-            color: #ddd;
-        }
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
 
-        /* ===== ARTÍCULOS ===== */
-        article {
-            background: rgba(0,0,0,0.6);
-            padding: 50px 30px;
-            margin: 40px auto;
-            width: 90%;
-            border-radius: 12px;
-            z-index: 2;
-            position: relative;
-        }
+  const simularGeneracionIA = () => {
+    if (!videoTitle) return;
+    setIsGenerating(true);
+    const prompt = `anime youtube thumbnail "${videoTitle}" neon colors gaming style high quality 4k`;
+    setTimeout(() => {
+      setGeneratedPrompt(prompt);
+      setIsGenerating(false);
+    }, 2000);
+  };
 
-        article h2 {
-            border-left: 4px solid #ff2fb2;
-            padding-left: 10px;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
+  // --- COMPONENTES DE VISTA ---
 
-        .card {
-            background: rgba(20,20,30,0.8);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- PARTÍCULAS -->
-    <div class="particulas"></div>
-
-    <!-- CHICAS FLOTANTES -->
-    <img class="chica-izquierda" src="imagenes/chica_izquierda.png">
-    <img class="chica-derecha" src="imagenes/chica_derecha.png">
-
-    <!-- ===== PORTADA 1: BIENVENIDA ===== -->
-    <section class="portada" id="bienvenida">
-        <h1>BIENVENIDA AL MUNDO ISEKAI</h1>
-        <p>Has cruzado el portal. Las guardianas te estaban esperando.</p>
-    </section>
-
-    <!-- ===== PORTADA 2: CANAL ===== -->
-    <section class="portada" id="canal">
-        <h1>MI CANAL</h1>
-        <p>Anime, gaming y contenido épico todos los días.</p>
-    </section>
-
-    <article>
-        <h2>Noticias del Canal</h2>
-        <div class="card">
-            <h3>Nueva serie isekai rompe récords</h3>
-            <p>El mundo mágico está más vivo que nunca.</p>
+  const LoginView = () => (
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="max-w-md w-full bg-[#141414] border border-gray-800 rounded-3xl p-10 shadow-2xl text-center">
+        <div className="w-20 h-20 bg-gradient-to-br from-[#ff7a00] to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#ff7a00]/20">
+           <span className="font-black text-4xl italic text-white">O</span>
         </div>
-        <div class="card">
-            <h3>Evento especial del canal</h3>
-            <p>Momentos épicos, risas y caos asegurado.</p>
+        <h2 className="text-3xl font-black text-white mb-2">IDENTIFÍCATE</h2>
+        <p className="text-gray-500 mb-8">Accede al portal Otaku 24/7</p>
+        <button 
+          onClick={handleLogin}
+          className="w-full bg-[#ff7a00] hover:bg-[#e66a00] text-white font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02]"
+        >
+          Entrar como {user.name}#{user.tag}
+        </button>
+        <p className="mt-6 text-xs text-gray-600 uppercase tracking-widest">Conexión Segura Isekai</p>
+      </div>
+    </div>
+  );
+
+  const HeroSection = () => (
+    <div className="relative h-[60vh] md:h-[70vh] w-full bg-gray-900 overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-60"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&q=80&w=1920')" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0f0f0f] via-[#0f0f0f]/50 to-transparent" />
+      
+      <div className="relative h-full flex items-center px-6 md:px-16 max-w-7xl mx-auto">
+        <div className="max-w-2xl">
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tight drop-shadow-lg">
+            BIENVENIDO A <br/><span className="text-[#ff7a00]">OTAKU 24/7</span>
+          </h1>
+          <p className="text-xl text-gray-300 mb-8 font-light">
+            Tu plataforma definitiva para Anime, Gaming y Terror. Transmitiendo contenido premium las 24 horas del día.
+          </p>
+          <div className="flex gap-4">
+            <button className="flex items-center gap-2 bg-[#ff7a00] hover:bg-[#e66a00] text-white px-8 py-4 rounded-md font-bold text-lg transition-transform hover:scale-105">
+              <PlayCircle className="w-6 h-6" /> Ver Ahora
+            </button>
+            <button className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-8 py-4 rounded-md font-bold text-lg transition-colors">
+              Explorar
+            </button>
+          </div>
         </div>
-    </article>
+      </div>
+    </div>
+  );
 
-    <!-- ===== PORTADA 3: ISEKAI ===== -->
-    <section class="portada" id="isekai">
-        <h1>PORTAL ISEKAI</h1>
-        <p>Explora mundos mágicos, vota tus animes favoritos y descubre dónde verlos.</p>
-    </section>
+  const ContentGrid = ({ title, items }) => (
+    <div className="py-8 px-6 md:px-16 max-w-7xl mx-auto">
+      <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-[#ff7a00] pl-3">
+        {title}
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {items.map((item, idx) => (
+          <div key={idx} className="group relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,122,0,0.3)] hover:z-10 bg-[#1e1e1e]">
+            <div className="aspect-video w-full overflow-hidden">
+              <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            </div>
+            <div className="absolute top-2 right-2 bg-[#ff7a00] text-xs font-bold px-2 py-1 rounded shadow-lg">
+              {item.tag}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+              <h3 className="text-white font-bold text-lg">{item.title}</h3>
+              <div className="flex items-center gap-2 mt-2">
+                <PlayCircle className="w-8 h-8 text-[#ff7a00]" />
+                <span className="text-sm text-gray-300 font-medium">Reproducir</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
-    <article>
-        <h2>Animes Isekai</h2>
-        <div class="card">
-            <h3>Re:Zero</h3>
-            <p>Disponible en: Crunchyroll</p>
+  if (!isLoggedIn) return <LoginView />;
+
+  return (
+    <div className="min-h-screen bg-[#0f0f0f] text-white font-sans selection:bg-[#ff7a00] selection:text-white">
+      {/* NAVEGACIÓN */}
+      <header className="sticky top-0 z-50 bg-[#141414]/95 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div 
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => setCurrentTab('home')}
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-[#ff7a00] to-purple-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(255,122,0,0.4)]">
+                <span className="font-black text-xl italic tracking-tighter">O</span>
+              </div>
+              <span className="text-2xl font-black tracking-tight uppercase bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                Otaku <span className="text-[#ff7a00]">24/7</span>
+              </span>
+            </div>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = currentTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setCurrentTab(tab.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all duration-300
+                      ${isActive 
+                        ? 'bg-[#ff7a00]/10 text-[#ff7a00]' 
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {tab.label}
+                  </button>
+                )
+              })}
+            </nav>
+
+            {/* Right Icons & User Menu */}
+            <div className="hidden md:flex items-center gap-4 text-gray-400">
+              <button className="hover:text-white transition-colors"><Search className="w-5 h-5" /></button>
+              <button className="hover:text-white transition-colors"><Bell className="w-5 h-5" /></button>
+              
+              <div className="relative">
+                <div 
+                  className="w-10 h-10 rounded-full bg-gray-800 ml-2 border-2 border-transparent hover:border-[#ff7a00] cursor-pointer transition-all overflow-hidden"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                >
+                  <img src={user.avatar} alt="User" />
+                </div>
+
+                {/* DROPDOWN USER MENU */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-3 w-56 bg-[#1a1a1a] border border-gray-800 rounded-2xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                    <div className="px-4 py-3 border-b border-gray-800 mb-2">
+                      <p className="text-white font-bold text-sm">{user.name}</p>
+                      <p className="text-gray-500 text-xs">#{user.tag}</p>
+                    </div>
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 transition-colors">
+                      <User className="w-4 h-4" /> Mi Perfil
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 transition-colors">
+                      <Settings className="w-4 h-4" /> Ajustes
+                    </button>
+                    <div className="h-px bg-gray-800 my-2"></div>
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold"
+                    >
+                      <LogOut className="w-4 h-4" /> Cerrar Sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="md:hidden text-gray-300 p-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
         </div>
-        <div class="card">
-            <h3>Konosuba</h3>
-            <p>Disponible en: Netflix</p>
+
+        {/* Mobile Nav */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-[#141414] border-t border-gray-800 p-4 absolute w-full left-0 shadow-xl">
+             <div className="flex items-center gap-3 p-4 mb-4 bg-gray-900/50 rounded-xl">
+                <img src={user.avatar} className="w-12 h-12 rounded-full" />
+                <div>
+                  <p className="font-bold">{user.name}</p>
+                  <button onClick={handleLogout} className="text-xs text-red-400 font-bold uppercase mt-1">Cerrar Sesión</button>
+                </div>
+             </div>
+            <div className="flex flex-col space-y-2">
+              {TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = currentTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setCurrentTab(tab.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold
+                      ${isActive ? 'bg-[#ff7a00]/20 text-[#ff7a00]' : 'text-gray-300 hover:bg-gray-800'}`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {tab.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ÁREA DE CONTENIDO PRINCIPAL */}
+      <main className="pb-20">
+        {currentTab === 'home' && (
+          <div className="animate-in fade-in duration-500">
+            <HeroSection />
+            <ContentGrid title="Animes en Tendencia" items={MOCK_CONTENT.anime} />
+            <ContentGrid title="Gaming & E-Sports" items={MOCK_CONTENT.gaming} />
+            <ContentGrid title="Especial Terror" items={MOCK_CONTENT.terror} />
+          </div>
+        )}
+        
+        {currentTab === 'anime' && (
+          <div className="animate-in fade-in duration-500 pt-8">
+            <ContentGrid title="Catálogo Anime Completo" items={[...MOCK_CONTENT.anime, ...MOCK_CONTENT.anime]} />
+          </div>
+        )}
+
+        {currentTab === 'gaming' && (
+          <div className="animate-in fade-in duration-500 pt-8">
+            <ContentGrid title="Mundo Gaming" items={[...MOCK_CONTENT.gaming, ...MOCK_CONTENT.gaming]} />
+          </div>
+        )}
+
+        {currentTab === 'terror' && (
+          <div className="animate-in fade-in duration-500 pt-8">
+            <ContentGrid title="Zona de Terror" items={[...MOCK_CONTENT.terror, ...MOCK_CONTENT.terror]} />
+          </div>
+        )}
+
+        {/* Las demás pestañas se mantienen igual... */}
+        {currentTab === 'noticias' && (
+           <div className="py-12 px-6 md:px-16 max-w-7xl mx-auto min-h-screen text-center">
+             <h2 className="text-3xl font-bold mb-4">Noticias de Anime</h2>
+             <p className="text-gray-500">Conectando con la API de Jikan...</p>
+           </div>
+        )}
+        
+        {currentTab === 'creadores' && (
+          <div className="py-20 text-center">
+            <Video className="w-20 h-20 mx-auto text-[#ff7a00] mb-4" />
+            <h2 className="text-3xl font-bold">Panel de Control de Creadores</h2>
+            <p className="text-gray-500">Sube contenido y gestiona tu canal.</p>
+          </div>
+        )}
+
+        {currentTab === 'donaciones' && (
+          <div className="py-20 text-center">
+             <Heart className="w-20 h-20 mx-auto text-red-500 mb-4 animate-pulse" />
+             <h2 className="text-3xl font-bold">Apoya el Portal</h2>
+             <button className="mt-8 bg-red-600 px-10 py-4 rounded-full font-bold">Donar con PayPal</button>
+          </div>
+        )}
+      </main>
+
+      {/* FOOTER */}
+      <footer className="bg-[#141414] py-12 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 text-center text-gray-500">
+          <h2 className="text-2xl font-black text-white opacity-80 mb-6">OTAKU <span className="text-[#ff7a00]">24/7</span></h2>
+          <p className="text-xs">&copy; 2026 Otaku 24/7 Platform. Todos los derechos reservados.</p>
         </div>
-        <div class="card">
-            <h3>Tensei Slime</h3>
-            <p>Disponible en: Crunchyroll</p>
-        </div>
-    </article>
-
-    <!-- ===== PORTADA 4: GUÍAS ===== -->
-    <section class="portada" id="guias">
-        <h1>GUÍAS Y TRUCOS</h1>
-        <p>Consejos, builds y estrategias para tus juegos favoritos.</p>
-    </section>
-
-    <article>
-        <h2>Guías y Consejos</h2>
-        <div class="card">
-            <h3>Genshin Impact – Progresar rápido</h3>
-            <p>Ruta diaria, artefactos y equipo recomendado.</p>
-        </div>
-        <div class="card">
-            <h3>Honkai: Star Rail – Equipos meta</h3>
-            <p>Composiciones fuertes para el endgame.</p>
-        </div>
-    </article>
-
-    <!-- ===== PORTADA 5: APOYO ===== -->
-    <section class="portada" id="apoyo">
-        <h1>APOYA EL PROYECTO</h1>
-        <p>Ayuda a mantener Otaku 24/7 activo y sin anuncios.</p>
-    </section>
-
-    <article>
-        <h2>Donaciones y Afiliaciones</h2>
-        <div class="card">
-            <p>Elige tu forma de apoyar:</p>
-            <button>PayPal</button>
-            <button>Ko‑fi</button>
-            <button>Patreon</button>
-            <button>Amazon Afiliados</button>
-        </div>
-    </article>
-
-    <!-- ===== PORTADA 6: ZONA RESTRINGIDA ===== -->
-    <section class="portada" id="zona">
-        <h1>ZONA RESTRINGIDA</h1>
-        <p>Advertencia: contenido bloqueado.</p>
-    </section>
-
-    <article>
-        <h2>Acceso Denegado</h2>
-        <div class="card" style="border:2px solid red;">
-            <h3>Zona en mantenimiento</h3>
-            <p>Este portal está bloqueado temporalmente.</p>
-        </div>
-    </article>
-
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-</body>
-</html>
+      </footer>
+    </div>
+  );
+}
