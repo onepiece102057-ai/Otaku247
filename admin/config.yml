@@ -2,6 +2,11 @@ backend:
   name: github
   repo: onepiece102057-ai/Otaku247
   branch: main
+  base_url: https://github.com
+  auth_endpoint: oauth/authorize
+
+display_url: https://onepiece102057-ai.github.io/Otaku247/
+logo_url: https://onepiece102057-ai.github.io/Otaku247/imagenes/logo.png
 
 media_folder: "imagenes"
 public_folder: "/imagenes"
