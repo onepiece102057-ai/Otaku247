@@ -3,10 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Otaku 24/7 – Admin</title>
+  <title>Otaku 24/7 – Panel de Control</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Este pequeño truco evita el error "Not Found" al cerrar el login
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/Otaku247/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
