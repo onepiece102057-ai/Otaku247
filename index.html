@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otaku 24/7 – Mundo Isekai Oscuro</title>
+    <title>Otaku 24/7 – Portal Isekai Oscuro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
 
-        /* ===== ESTILOS PERSONALIZADOS ===== */
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: #05000a; /* Fondo ultra oscuro */
+            background: #05000a;
             color: white;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Fondo con imagen (Si no tienes la imagen, se verá el color oscuro) */
         .bg-isekai {
-            background-image: linear-gradient(rgba(5, 0, 10, 0.85), rgba(5, 0, 10, 0.85)), url('imagenes/fondo.png');
+            background-image: linear-gradient(rgba(5, 0, 10, 0.9), rgba(5, 0, 10, 0.9)), url('imagenes/fondo.png');
             background-attachment: fixed;
             background-size: cover;
             min-height: 100vh;
@@ -28,111 +26,132 @@
 
         .neon-border {
             border: 1px solid rgba(255, 47, 178, 0.3);
-            box-shadow: 0 0 20px rgba(255, 47, 178, 0.2);
+            box-shadow: 0 0 20px rgba(255, 47, 178, 0.1);
             backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.4s;
         }
 
-        .neon-text {
-            text-shadow: 0 0 15px #ff2fb2, 0 0 5px #ff2fb2;
+        .neon-border:hover {
+            border-color: #ff2fb2;
+            box-shadow: 0 0 30px rgba(255, 47, 178, 0.4);
+            transform: translateY(-5px);
         }
 
-        /* Animación de flotado para las chicas (si las subes) */
-        .float-anim {
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
+        .neon-text { text-shadow: 0 0 15px #ff2fb2; }
         .hidden { display: none !important; }
 
-        /* Estilo de los botones */
-        .btn-portal {
-            background: #ff2fb2;
-            transition: 0.3s;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Estilo de Barras de Progreso (Apoyo) */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
         }
-        .btn-portal:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px #ff2fb2;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff2fb2, #2563eb);
+            width: 65%; /* Nivel de apoyo actual */
         }
     </style>
 </head>
 <body class="bg-isekai">
 
     <div id="login-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-[#05000a] px-4">
-        <div class="max-w-md w-full p-10 rounded-3xl border border-[#ff2fb2]/30 bg-[#11001a]/80 text-center shadow-2xl">
-            <div class="text-6xl mb-6">🌌</div>
-            <h1 class="text-4xl font-900 text-white mb-2 tracking-tighter">OTAKU <span class="text-[#ff2fb2]">24/7</span></h1>
-            <p class="text-gray-500 text-sm mb-8 uppercase tracking-widest italic">Portal Isekai Oscuro</p>
-            
-            <button onclick="login()" class="btn-portal w-full py-4 rounded-xl text-white shadow-lg">
-                Sincronizar Almas
-            </button>
-            <p class="mt-6 text-[10px] text-gray-600 uppercase tracking-widest">Conexión Segura vía Morgana#22143</p>
+        <div class="max-w-md w-full p-10 rounded-3xl border border-[#ff2fb2]/30 bg-[#11001a]/90 text-center shadow-2xl">
+            <h1 class="text-4xl font-900 mb-2 tracking-tighter neon-text">OTAKU 24/7</h1>
+            <p class="text-gray-500 text-[10px] mb-8 uppercase tracking-[0.3em]">Protocolo Isekai v2.0</p>
+            <button onclick="login()" class="w-full bg-[#ff2fb2] py-4 rounded-xl font-900 text-white shadow-lg hover:scale-105 transition">Sincronizar</button>
         </div>
     </div>
 
     <div id="main-portal" class="hidden">
         
-        <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/60 backdrop-blur-md border-b border-[#ff2fb2]/20">
-            <div class="font-900 text-xl tracking-tighter">OTAKU <span class="text-[#ff2fb2]">24/7</span></div>
-            <div class="flex items-center gap-6">
-                <a href="#misiones" class="text-xs font-bold hover:text-[#ff2fb2] transition">MISIONES</a>
-                <button onclick="logout()" class="text-[10px] border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition">DESCONECTAR</button>
+        <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-md border-b border-[#ff2fb2]/20">
+            <div class="font-900 text-xl tracking-tighter neon-text">OTAKU 24/7</div>
+            <div class="flex gap-4 md:gap-8 text-[10px] font-bold">
+                <a href="#portales" class="hover:text-[#ff2fb2]">PORTALES</a>
+                <a href="#apoyo" class="hover:text-[#ff2fb2]">APOYO</a>
+                <a href="#trucos" class="hover:text-[#ff2fb2]">GUÍA</a>
+                <button onclick="logout()" class="text-red-500 border border-red-500 px-2 py-1 rounded">SALIR</button>
             </div>
         </nav>
 
-        <main class="pt-32 pb-20 px-6 max-w-6xl mx-auto relative">
+        <main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
             
-            <div class="hidden lg:block fixed left-4 top-1/4 w-48 float-anim opacity-60">
-                <img src="imagenes/chica_izquierda.png" alt="" onerror="this.style.display='none'">
-            </div>
-            <div class="hidden lg:block fixed right-4 top-1/4 w-48 float-anim opacity-60" style="animation-delay: 2s;">
-                <img src="imagenes/chica_derecha.png" alt="" onerror="this.style.display='none'">
-            </div>
-
-            <section class="neon-border p-12 rounded-[40px] text-center mb-12 bg-black/40">
-                <div class="text-[#ff2fb2] font-bold tracking-[0.5em] text-xs mb-4 uppercase">Acceso Autorizado</div>
-                <h2 class="text-5xl md:text-7xl font-900 mb-6 neon-text uppercase">Mundo Isekai</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Bienvenido al núcleo de investigación. Aquí los hilos del destino se entrelazan con el código oscuro.</p>
+            <section id="portales" class="mb-20">
+                <h2 class="text-3xl font-900 mb-8 border-l-4 border-[#ff2fb2] pl-4">🌌 PORTALES DIMENSIONALES</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="#" class="neon-border p-6 rounded-2xl block group">
+                        <h3 class="font-bold text-[#ff2fb2] group-hover:underline">Crunchyroll Premium</h3>
+                        <p class="text-xs text-gray-500 mt-2">Acceso directo a la biblioteca de anime.</p>
+                    </a>
+                    <a href="#" class="neon-border p-6 rounded-2xl block group">
+                        <h3 class="font-bold text-[#2563eb] group-hover:underline">Twitch Stream</h3>
+                        <p class="text-xs text-gray-500 mt-2">Transmisión en vivo desde el mundo oscuro.</p>
+                    </a>
+                    <a href="#" class="neon-border p-6 rounded-2xl block group">
+                        <h3 class="font-bold text-green-400 group-hover:underline">Discord Gremio</h3>
+                        <p class="text-xs text-gray-500 mt-2">Únete a la comunidad de viajeros.</p>
+                    </a>
+                </div>
             </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="misiones">
-                <div class="neon-border p-8 rounded-3xl bg-white/5 hover:bg-white/10 transition">
-                    <div class="text-3xl mb-4">📜</div>
-                    <h3 class="text-[#ffb7ff] font-bold text-xl mb-2 uppercase">Archivos Ohara</h3>
-                    <p class="text-sm text-gray-500">Documentación prohibida sobre el Siglo Vacío recuperada con éxito.</p>
+            <section id="apoyo" class="mb-20">
+                <div class="neon-border p-10 rounded-[40px] bg-black/60 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-900 mb-4">💎 APOYO AL GREMIO</h2>
+                        <p class="text-gray-400 mb-6 text-sm">Ayúdanos a mantener el portal abierto y mejorar el equipamiento.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                            <div>
+                                <p class="text-xs font-bold mb-2">META DE EQUIPAMIENTO MÍTICO: 65%</p>
+                                <div class="progress-bar"><div class="progress-fill"></div></div>
+                                <p class="text-[10px] mt-2 text-gray-500">Próximo objetivo: Nueva Cámara 4K</p>
+                            </div>
+                            <div class="flex gap-4">
+                                <button class="flex-1 bg-[#ff2fb2] py-3 rounded-xl font-bold text-xs">DONAR MANÁ (PayPal)</button>
+                                <button class="flex-1 bg-white/10 py-3 rounded-xl font-bold text-xs">KO-FI</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="neon-border p-8 rounded-3xl bg-[#ff2fb2]/5 border-[#ff2fb2]/50">
-                    <div class="text-3xl mb-4">🎮</div>
-                    <h3 class="text-[#ff2fb2] font-bold text-xl mb-2 uppercase">Gremio Battle.net</h3>
-                    <p class="text-white font-black text-lg mb-4">Morgana#22143</p>
-                    <button onclick="copyText('Morgana#22143')" class="w-full bg-blue-600 py-2 rounded-lg text-xs font-bold hover:bg-blue-500 transition">COPIAR ID</button>
+            </section>
+
+            <section id="trucos" class="mb-20">
+                <h2 class="text-3xl font-900 mb-8 border-l-4 border-[#2563eb] pl-4">📖 GUÍA DE SUPERVIVENCIA (TRUCOS)</h2>
+                <div class="space-y-4">
+                    <details class="neon-border p-4 rounded-xl cursor-pointer bg-white/5">
+                        <summary class="font-bold text-sm uppercase">¿Cómo obtener el Rango VIP Gratis?</summary>
+                        <p class="text-xs text-gray-400 mt-4 leading-relaxed">
+                            Participa en los eventos de los viernes en el canal de Discord. Los viajeros más activos reciben el rol de "Sombra Isekai" automáticamente.
+                        </p>
+                    </details>
+                    <details class="neon-border p-4 rounded-xl cursor-pointer bg-white/5">
+                        <summary class="font-bold text-sm uppercase">Truco de Battle.net: Morgana#22143</summary>
+                        <p class="text-xs text-gray-400 mt-4 leading-relaxed">
+                            Si me agregas y envías el código "ISEKAI247", te aceptaré en el gremio privado para partidas de Overwatch y WoW.
+                        </p>
+                    </details>
+                    <details class="neon-border p-4 rounded-xl cursor-pointer bg-white/5">
+                        <summary class="font-bold text-sm uppercase">Comandos Secretos del Chat</summary>
+                        <p class="text-xs text-gray-400 mt-4 leading-relaxed">
+                            Usa <span class="text-[#ff2fb2]">!darkness</span> para activar el modo oscuro en el chat y <span class="text-[#ff2fb2]">!portal</span> para recibir un enlace aleatorio de anime recomendado.
+                        </p>
+                    </details>
                 </div>
-                <div class="neon-border p-8 rounded-3xl bg-white/5 hover:bg-white/10 transition">
-                    <div class="text-3xl mb-4">💎</div>
-                    <h3 class="text-[#ffb7ff] font-bold text-xl mb-2 uppercase">Nivel: VIP SSS</h3>
-                    <p class="text-sm text-gray-500">Tu estatus actual te permite acceder a transmisiones de alta prioridad.</p>
-                </div>
-            </div>
+            </section>
+
         </main>
 
-        <footer class="text-center py-20 opacity-20 text-[9px] tracking-[1em] uppercase">
-            Otaku 24/7 &copy; 2026 - Protocolo Isekai Oscuro Activo
+        <footer class="text-center py-10 opacity-20 text-[9px] tracking-[1em] uppercase">
+            Otaku 24/7 &copy; 2026 - Administrado por Morgana
         </footer>
     </div>
 
-    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#ff2fb2] text-white px-6 py-2 rounded-full text-xs font-bold opacity-0 transition-opacity pointer-events-none z-[10001]">
-        ¡ID COPIADO AL PORTAPAPELES!
-    </div>
-
     <script>
-        // --- LÓGICA DE SESIÓN ---
         function login() {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('main-portal').classList.remove('hidden');
@@ -145,19 +164,10 @@
             localStorage.removeItem('isekai_session');
         }
 
-        // --- PERSISTENCIA ---
         window.onload = function() {
             if (localStorage.getItem('isekai_session') === 'active') {
                 login();
             }
-        }
-
-        // --- UTILIDADES ---
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
         }
     </script>
 </body>
