@@ -3,99 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otaku 24/7 – Portal Dinámico</title>
+    <title>Otaku 24/7 – Portal Multiverso</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
+        
         :root { --primary: #bc13fe; --bg-dark: #05000a; }
-        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: white; transition: 0.8s; }
-        section { min-height: 100vh; padding: 100px 20px; }
-        .portal-card { background: rgba(255, 255, 255, 0.03); border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary); border-radius: 30px; backdrop-filter: blur(10px); overflow: hidden; }
+        
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg-dark); color: white; transition: background-color 0.8s ease; scroll-behavior: smooth; }
+        
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px; transition: 0.8s; }
+        
+        .portal-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 2px solid var(--primary); 
+            box-shadow: 0 0 20px var(--primary); 
+            border-radius: 30px; 
+            backdrop-filter: blur(10px); 
+            transition: 0.5s;
+        }
+
         .neon-text { color: var(--primary); text-shadow: 0 0 15px var(--primary); }
-        nav { background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--primary); position: fixed; top: 0; w-full; z-50; width: 100%; }
+        
+        nav { background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--primary); position: fixed; top: 0; width: 100%; z-index: 100; }
+        
+        .nav-link { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; transition: 0.3s; }
+        .nav-link:hover { opacity: 1; color: var(--primary); }
+
         .hidden { display: none !important; }
+        
+        /* Animación de entrada para noticias */
+        .news-card { animation: slideUp 0.6s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
+    <div id="login-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-black">
+        <div class="portal-card p-12 text-center scale-110">
+            <h1 class="text-5xl font-900 neon-text mb-8 italic">OTAKU 24/7</h1>
+            <button onclick="login()" class="px-12 py-3 bg-white text-black font-black rounded-full hover:scale-110 transition uppercase tracking-widest">Entrar al Portal</button>
+        </div>
+    </div>
+
     <nav class="py-4 px-8 flex justify-between items-center">
-        <div class="font-900 text-xl neon-text uppercase">O24/7</div>
-        <div class="flex gap-6 text-[10px] font-bold uppercase">
-            <a href="#inicio">Inicio</a>
-            <a href="#noticias" class="text-orange-500">Noticias</a>
-            <a href="/admin/" class="bg-white text-black px-2 py-1 rounded">PANEL ADMIN</a>
+        <div class="font-900 text-xl neon-text">O24/7</div>
+        <div class="hidden md:flex gap-6 items-center">
+            <a href="#inicio" class="nav-link">Inicio</a>
+            <a href="#anime" class="nav-link">Anime</a>
+            <a href="#gaming" class="nav-link">Gaming</a>
+            <a href="#noticias" class="nav-link">Noticias</a>
+            <a href="#apoyo" class="nav-link">Apoyo</a>
+            <a href="/admin/" class="bg-white text-black px-2 py-1 rounded text-[9px] font-black">ADMIN</a>
+            <button onclick="logout()" class="text-red-500 text-[9px] border border-red-500 px-2 rounded">SALIR</button>
         </div>
     </nav>
 
-    <section id="inicio" class="flex flex-col items-center justify-center text-center">
-        <h1 class="text-7xl font-900 neon-text mb-4 italic">PORTAL ACTIVO</h1>
-        <p class="text-gray-500 tracking-[1em] text-xs">SISTEMA DE NOTICIAS AUTOMÁTICO</p>
-    </section>
-
-    <section id="noticias" data-color="#f59e0b" data-bg="#1a0d00">
-        <div class="max-w-6xl mx-auto w-full">
-            <h2 class="text-5xl font-900 text-[#f59e0b] mb-12 text-center italic">ÚLTIMOS ARCHIVOS</h2>
-            <div id="news-feed" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <p class="text-center col-span-full text-gray-600">Sincronizando con el servidor...</p>
+    <div id="main-portal" class="hidden">
+        
+        <section id="inicio" data-color="#bc13fe" data-bg="#05000a">
+            <div class="text-center">
+                <h2 class="text-7xl md:text-9xl font-900 neon-text mb-4 italic uppercase">Portal Alpha</h2>
+                <p class="text-gray-500 tracking-[1em] text-xs uppercase">Conexión Segura: Morgana#22143</p>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section id="anime" data-color="#ff2fb2" data-bg="#1a050d">
+            <div class="max-w-5xl mx-auto w-full px-6">
+                <h2 class="text-5xl font-900 neon-text mb-12 italic">ANIME INTEL</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="portal-card p-8 bg-pink-950/20">
+                        <h3 class="text-2xl font-bold mb-4">Solo Leveling S2</h3>
+                        <p class="text-sm text-gray-400">Estado del sistema: Transmisión autorizada.</p>
+                    </div>
+                    <div class="portal-card p-8 bg-pink-950/20">
+                        <h3 class="text-2xl font-bold mb-4">One Piece: Elbaf</h3>
+                        <p class="text-sm text-gray-400">Archivos de Ohara descifrando secretos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gaming" data-color="#2563eb" data-bg="#000d1a">
+            <div class="portal-card p-12 max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl font-900 neon-text mb-4">GREMIO GAMING</h2>
+                <p class="text-5xl font-black mb-8 tracking-tighter">Morgana#22143</p>
+                <button onclick="copyID()" class="bg-[#2563eb] text-white px-10 py-3 rounded-full font-bold shadow-lg shadow-blue-600/50 hover:scale-105 transition">COPIAR BATTLE.NET</button>
+            </div>
+        </section>
+
+        <section id="noticias" data-color="#f59e0b" data-bg="#1a0d00">
+            <div class="max-w-6xl mx-auto w-full px-6">
+                <h2 class="text-5xl font-900 neon-text mb-12 text-center italic uppercase">Noticias del Sistema</h2>
+                <div id="news-feed" class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                    <p class="text-center col-span-full opacity-50 animate-pulse">Buscando actualizaciones en el servidor...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="apoyo" data-color="#d4af37" data-bg="#0a0a05">
+            <div class="portal-card p-16 max-w-xl mx-auto text-center border-4">
+                <h2 class="text-4xl font-900 neon-text mb-6">MISIÓN ORO</h2>
+                <p class="text-gray-400 mb-10 text-sm leading-loose uppercase tracking-widest">Apoya para mantener el portal online</p>
+                <div class="flex flex-col gap-4">
+                    <button class="bg-[#d4af37] text-black py-4 rounded-xl font-black text-xl hover:bg-white transition">DONAR VÍA PAYPAL</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-10 text-center opacity-30 text-[10px] tracking-[1.5em] uppercase">Otaku 24/7 Gremio</footer>
+    </div>
 
     <script>
-        // CONFIGURACIÓN DE TU REPO
         const username = "onepiece102057-ai";
         const repo = "Otaku247";
         const folder = "_noticias";
 
+        // LOGIN Y LOGOUT
+        function login() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-portal').classList.remove('hidden');
+            localStorage.setItem('isekai_auth', 'active');
+            fetchNews();
+        }
+        function logout() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('main-portal').classList.add('hidden');
+            localStorage.removeItem('isekai_auth');
+        }
+
+        // CARGAR NOTICIAS DE GITHUB
         async function fetchNews() {
             const container = document.getElementById('news-feed');
             try {
-                // 1. Obtener lista de archivos en _noticias
                 const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folder}`);
                 const files = await response.json();
-                
-                if (files.length === 0 || files.message === "Not Found") {
-                    container.innerHTML = "<p class='text-center col-span-full'>No hay noticias publicadas aún.</p>";
+                if (!files || files.length === 0 || files.message === "Not Found") {
+                    container.innerHTML = "<p class='col-span-full text-center'>No hay transmisiones archivadas aún.</p>";
                     return;
                 }
-
-                container.innerHTML = ""; // Limpiar cargando
-
-                // 2. Leer cada archivo .md o .yml
+                container.innerHTML = "";
                 for (const file of files) {
                     if (file.name === ".gitkeep") continue;
-
                     const contentRes = await fetch(file.download_url);
                     const rawContent = await contentRes.text();
-                    
-                    // Extraer el Frontmatter (el texto entre ---)
                     const parts = rawContent.split('---');
                     if (parts.length >= 3) {
-                        const data = jsyaml.load(parts[1]); // Convertir YAML a Objeto JS
-                        
-                        const card = `
-                            <div class="portal-card group">
-                                <img src="${data.image || 'https://via.placeholder.com/400x200'}" class="w-full h-40 object-cover opacity-60">
+                        const data = jsyaml.load(parts[1]);
+                        container.innerHTML += `
+                            <div class="portal-card news-card group">
+                                <img src="${data.image || 'https://via.placeholder.com/400x200'}" class="w-full h-40 object-cover opacity-50 group-hover:opacity-100 transition">
                                 <div class="p-6">
-                                    <span class="bg-orange-500 text-black text-[9px] font-black px-2 py-1 rounded mb-4 inline-block">NOTICIA</span>
-                                    <h3 class="font-bold text-lg mb-2 text-orange-400">${data.title}</h3>
-                                    ${data.video_id ? `<iframe class="w-full h-32 mb-4" src="https://www.youtube.com/embed/${data.video_id}" frameborder="0"></iframe>` : ''}
-                                    <p class="text-xs text-gray-400 mb-4">${parts[2].substring(0, 100)}...</p>
-                                    <button class="text-[10px] font-black border-b border-orange-500">ACCEDER →</button>
+                                    <span class="bg-orange-600 text-[8px] font-black px-2 py-1 rounded mb-4 inline-block">SISTEMA</span>
+                                    <h3 class="font-bold text-lg mb-2 text-orange-400 uppercase">${data.title}</h3>
+                                    ${data.video_id ? `<iframe class="w-full h-32 mb-4 rounded-lg" src="https://www.youtube.com/embed/${data.video_id}" frameborder="0"></iframe>` : ''}
+                                    <p class="text-[11px] text-gray-500 mb-4">${parts[2].substring(0, 80)}...</p>
+                                    <button class="text-[9px] font-black border-b border-orange-500 hover:text-white transition">ACCEDER AL ARCHIVO →</button>
                                 </div>
-                            </div>
-                        `;
-                        container.innerHTML += card;
+                            </div>`;
                     }
                 }
-            } catch (error) {
-                console.error("Error al cargar noticias:", error);
-                container.innerHTML = "<p class='text-center col-span-full text-red-500'>Error de conexión con el portal.</p>";
-            }
+            } catch (e) { container.innerHTML = "<p class='col-span-full text-center text-red-500'>Error de sincronización.</p>"; }
         }
 
-        window.onload = fetchNews;
+        // SCROLL DINÁMICO (Cambia el color de la web)
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 300) {
+                    document.documentElement.style.setProperty('--primary', sec.getAttribute('data-color'));
+                    document.documentElement.style.setProperty('--bg-dark', sec.getAttribute('data-bg'));
+                }
+            });
+        });
+
+        window.onload = () => { if (localStorage.getItem('isekai_auth') === 'active') login(); }
+        function copyID() { navigator.clipboard.writeText('Morgana#22143'); alert('¡Copiado!'); }
     </script>
 </body>
 </html>
