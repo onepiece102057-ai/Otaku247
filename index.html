@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otaku 24/7 – Sistema de Portales</title>
+    <title>Otaku 24/7 – Sistema Pro-Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
 
         :root {
-            --primary: #bc13fe; /* Color inicial (Púrpura) */
+            --primary: #bc13fe;
             --bg-dark: #05000a;
-            --accent-shadow: rgba(188, 19, 254, 0.5);
         }
 
         body {
@@ -19,179 +18,178 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
             color: white;
-            transition: background-color 0.8s ease, color 0.5s ease;
+            transition: background-color 0.8s ease;
         }
 
-        /* --- EFECTOS DE TRANSICIÓN --- */
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
-            transition: all 0.8s ease;
-        }
-
+        /* --- ESTILOS DE PORTALES --- */
+        section { min-height: 100vh; padding: 100px 20px; transition: 0.8s; }
+        
         .portal-card {
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid var(--primary);
-            box-shadow: 0 0 30px var(--accent-shadow);
-            border-radius: 40px;
+            box-shadow: 0 0 20px var(--primary);
+            border-radius: 30px;
             backdrop-filter: blur(10px);
-            transition: all 0.5s ease;
+            overflow: hidden;
+            transition: 0.5s;
         }
 
         .neon-text {
             color: var(--primary);
             text-shadow: 0 0 15px var(--primary);
-            transition: all 0.5s ease;
         }
 
-        /* --- NAV DINÁMICA --- */
-        nav {
-            background: rgba(0,0,0,0.8);
-            border-bottom: 1px solid var(--primary);
-        }
-
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
+        nav { background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--primary); }
+        
         .hidden { display: none !important; }
+
+        /* Animación para las noticias */
+        .news-entry { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-black">
-        <div class="portal-card p-12 text-center scale-110">
-            <h1 class="text-5xl font-900 neon-text mb-8 italic">OTAKU 24/7</h1>
-            <button onclick="login()" class="px-10 py-3 bg-white text-black font-black rounded-full hover:scale-110 transition">INICIAR VIAJE</button>
+        <div class="portal-card p-12 text-center border-[#bc13fe]">
+            <h1 class="text-5xl font-900 text-[#bc13fe] mb-8 italic">OTAKU 24/7</h1>
+            <button onclick="login()" class="px-12 py-3 bg-[#bc13fe] text-white font-black rounded-full hover:scale-110 transition">CONECTAR</button>
         </div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 py-4 px-8 flex justify-between items-center transition-all duration-500">
-        <div class="font-900 text-xl tracking-tighter neon-text">O24/7</div>
-        <div class="flex gap-4 md:gap-8 text-[10px] font-bold uppercase">
-            <a href="#inicio" class="hover:opacity-100 opacity-60">Inicio</a>
-            <a href="#anime" class="hover:opacity-100 opacity-60">Anime</a>
-            <a href="#gaming" class="hover:opacity-100 opacity-60">Gaming</a>
-            <a href="#noticias" class="hover:opacity-100 opacity-60">Noticias</a>
-            <a href="#apoyo" class="hover:opacity-100 opacity-60 text-yellow-500">Apoyo</a>
-            <button onclick="logout()" class="ml-4 border border-red-500 text-red-500 px-2 rounded">Salir</button>
+    <nav class="fixed top-0 w-full z-50 py-4 px-8 flex justify-between items-center transition-all">
+        <div class="font-900 text-xl neon-text">O24/7</div>
+        <div class="flex gap-6 text-[10px] font-bold uppercase">
+            <a href="#inicio">Inicio</a>
+            <a href="#anime">Anime</a>
+            <a href="#gaming">Gaming</a>
+            <a href="#noticias" class="text-orange-500">Noticias</a>
+            <a href="#apoyo" class="text-yellow-500">Apoyo</a>
+            <button onclick="logout()" class="text-red-500 ml-4">Salir</button>
         </div>
     </nav>
 
     <div id="main-portal" class="hidden">
         
-        <section id="inicio" data-color="#bc13fe" data-bg="#05000a">
-            <div class="text-center">
-                <span class="nav-dot"></span>
-                <h2 class="text-7xl font-900 mb-4 neon-text">PORTAL ALPHA</h2>
-                <p class="text-gray-400 tracking-[1em] text-xs">MUNDO ISEKAI OSCURO</p>
-            </div>
+        <section id="inicio" data-color="#bc13fe" data-bg="#05000a" class="flex flex-col items-center justify-center">
+            <h2 class="text-7xl font-900 neon-text mb-4 uppercase">Portal Alpha</h2>
+            <p class="text-gray-500 tracking-[1em] text-xs">MUNDO ISEKAI OSCURO</p>
         </section>
 
         <section id="anime" data-color="#ff2fb2" data-bg="#1a050d">
-            <div class="portal-card p-12 max-w-4xl w-full text-center">
-                <h2 class="text-5xl font-900 neon-text mb-8 italic">ESTRENOS ANIME</h2>
-                <div class="grid md:grid-cols-2 gap-6 text-left">
-                    <div class="p-6 border-l-4 border-[#ff2fb2] bg-white/5">
-                        <h4 class="font-bold">Solo Leveling S2</h4>
-                        <p class="text-xs text-gray-500">Estado: Transmitiendo</p>
-                    </div>
-                    <div class="p-6 border-l-4 border-[#ff2fb2] bg-white/5">
-                        <h4 class="font-bold">One Piece Elbaf</h4>
-                        <p class="text-xs text-gray-500">Estado: Próximamente</p>
-                    </div>
+            <div class="max-w-4xl mx-auto w-full text-center">
+                <h2 class="text-5xl font-900 neon-text mb-12">ANIME INTEL</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="portal-card p-6 italic">Solo Leveling S2 - Arcs confirmed</div>
+                    <div class="portal-card p-6 italic">One Piece - Elbaf Visuals</div>
                 </div>
             </div>
         </section>
 
         <section id="gaming" data-color="#2563eb" data-bg="#000d1a">
-            <div class="portal-card p-12 max-w-4xl w-full">
-                <h2 class="text-5xl font-900 neon-text mb-8 text-center italic">ZONA GAMING</h2>
-                <div class="bg-black/40 p-8 rounded-2xl border-2 border-dashed border-[#2563eb] text-center">
-                    <p class="text-sm uppercase mb-2">Battle.net Protocol</p>
-                    <h3 class="text-4xl font-black mb-4">Morgana#22143</h3>
-                    <button class="bg-[#2563eb] text-white px-8 py-2 rounded-full font-bold">SOLICITAR UNIÓN</button>
-                </div>
+            <div class="portal-card p-12 max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl font-900 neon-text mb-4 uppercase">Gremio Gaming</h2>
+                <p class="text-2xl font-black mb-8">ID: Morgana#22143</p>
+                <button onclick="copyID()" class="bg-[#2563eb] px-8 py-2 rounded-full font-bold">COPIAR BATTLE.NET</button>
             </div>
         </section>
 
         <section id="noticias" data-color="#f59e0b" data-bg="#1a0d00">
-            <div class="max-w-4xl w-full px-6">
-                <h2 class="text-5xl font-900 neon-text mb-12 italic text-center">BOLETÍN INFORMATIVO</h2>
-                <div class="space-y-4">
-                    <div class="portal-card p-4 flex justify-between items-center">
-                        <span>Servidores Isekai v2.6 Online</span>
-                        <span class="text-[10px] bg-[#f59e0b] text-black px-2 py-1 rounded font-bold">NEW</span>
+            <div class="max-w-6xl mx-auto w-full">
+                <h2 class="text-5xl font-900 neon-text mb-12 text-center italic">NOTICIAS DEL SISTEMA</h2>
+                <div id="news-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     </div>
-                    <div class="portal-card p-4 flex justify-between items-center opacity-70">
-                        <span>Mantenimiento de Portal Finalizado</span>
-                        <span class="text-[10px] border border-[#f59e0b] px-2 py-1 rounded">OLD</span>
-                    </div>
-                </div>
             </div>
         </section>
 
         <section id="apoyo" data-color="#d4af37" data-bg="#0a0a05">
-            <div class="portal-card p-16 max-w-2xl w-full text-center border-4">
-                <h2 class="text-5xl font-900 neon-text mb-6 uppercase">Misión Oro</h2>
-                <p class="text-gray-400 mb-10 text-sm leading-relaxed">Apoya la investigación de Ohara y desbloquea el conocimiento prohibido.</p>
+            <div class="portal-card p-12 max-w-xl mx-auto text-center">
+                <h2 class="text-4xl font-900 neon-text mb-6">Misión de Apoyo</h2>
                 <div class="flex flex-col gap-4">
-                    <button class="bg-[#d4af37] text-black py-4 rounded-xl font-black text-xl hover:scale-105 transition">DONAR POR PAYPAL</button>
-                    <button class="border-2 border-[#d4af37] text-[#d4af37] py-2 rounded-xl font-bold">Patreon Gremio</button>
+                    <button class="bg-[#d4af37] text-black py-4 rounded-xl font-black">PAYPAL</button>
+                    <button class="border border-[#d4af37] text-[#d4af37] py-4 rounded-xl font-bold">PATREON</button>
                 </div>
             </div>
         </section>
 
-        <footer class="py-10 text-center opacity-30 text-[10px] tracking-[1em]">SISTEMA OTAKU 24/7</footer>
     </div>
 
     <script>
-        // --- LÓGICA DE LOGIN ---
+        // --- BASE DE DATOS JSON (Edita esto para cambiar noticias) ---
+        const noticiasData = [
+            {
+                "titulo": "Solo Leveling: S2 Confirmada",
+                "resumen": "El despertar del monarca de las sombras llega este invierno.",
+                "etiqueta": "URGENTE",
+                "colorEtiqueta": "bg-red-600",
+                "imagen": "https://via.placeholder.com/400x200/1a0d00/f59e0b?text=ANIME+NEWS"
+            },
+            {
+                "titulo": "Actualización Portal v2.6",
+                "resumen": "Mejoras en la estabilidad del servidor y nuevos efectos neón.",
+                "etiqueta": "SISTEMA",
+                "colorEtiqueta": "bg-blue-600",
+                "imagen": "https://via.placeholder.com/400x200/1a0d00/f59e0b?text=SISTEMA"
+            },
+            {
+                "titulo": "Misterio en Elbaf",
+                "resumen": "Nuevas teorías sobre el tesoro de los gigantes en One Piece.",
+                "etiqueta": "MANGA",
+                "colorEtiqueta": "bg-orange-500",
+                "imagen": "https://via.placeholder.com/400x200/1a0d00/f59e0b?text=MANGA"
+            }
+        ];
+
+        // --- CARGAR NOTICIAS DINÁMICAMENTE ---
+        function cargarNoticias() {
+            const container = document.getElementById('news-container');
+            container.innerHTML = noticiasData.map(post => `
+                <div class="portal-card news-entry group">
+                    <img src="${post.imagen}" class="w-full h-40 object-cover opacity-60">
+                    <div class="p-6">
+                        <span class="${post.colorEtiqueta} text-[9px] font-black px-2 py-1 rounded mb-4 inline-block">${post.etiqueta}</span>
+                        <h3 class="font-bold text-lg mb-2">${post.titulo}</h3>
+                        <p class="text-xs text-gray-400 mb-4">${post.resumen}</p>
+                        <button class="text-[10px] font-black hover:text-orange-500">LEER ARCHIVO →</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- LÓGICA DE SESIÓN Y SCROLL ---
         function login() {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('main-portal').classList.remove('hidden');
-            localStorage.setItem('portal_auth', 'true');
+            localStorage.setItem('auth_o247', 'true');
+            cargarNoticias(); // Cargamos las noticias al entrar
         }
 
         function logout() {
             document.getElementById('login-screen').classList.remove('hidden');
             document.getElementById('main-portal').classList.add('hidden');
-            localStorage.removeItem('portal_auth');
+            localStorage.removeItem('auth_o247');
         }
 
-        // --- CAMBIO DE COLOR DINÁMICO ---
+        // Cambio de color al hacer scroll
         const sections = document.querySelectorAll('section');
-        const root = document.documentElement;
-
         window.addEventListener('scroll', () => {
-            let current = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 300) {
-                    current = section;
+            sections.forEach(sec => {
+                const top = window.scrollY;
+                const offset = sec.offsetTop - 300;
+                if (top >= offset) {
+                    document.documentElement.style.setProperty('--primary', sec.getAttribute('data-color'));
+                    document.documentElement.style.setProperty('--bg-dark', sec.getAttribute('data-bg'));
                 }
             });
-
-            if (current) {
-                const color = current.getAttribute('data-color');
-                const bg = current.getAttribute('data-bg');
-                root.style.setProperty('--primary', color);
-                root.style.setProperty('--bg-dark', bg);
-                root.style.setProperty('--accent-shadow', color + '80');
-            }
         });
 
         window.onload = () => {
-            if (localStorage.getItem('portal_auth') === 'true') login();
+            if (localStorage.getItem('auth_o247') === 'true') login();
+        }
+
+        function copyID() {
+            navigator.clipboard.writeText('Morgana#22143');
+            alert('ID de Battle.net copiado');
         }
     </script>
 </body>
